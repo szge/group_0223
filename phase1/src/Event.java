@@ -6,6 +6,7 @@
  */
 
 import java.time.*;
+import java.util.ArrayList;
 
 public class Event {
 
@@ -18,10 +19,48 @@ public class Event {
     private LocalDateTime startDateTime;
     private Duration duration;
 
-    public Event(String name, LocalDateTime startDateTime, Duration duration) {
+    private int id;
+
+    private ArrayList<String> tags;
+
+    private Memo memo = null;
+
+    public Event() {
+        this.id = 0;
+        this.name = "";
+        this.startDateTime = LocalDateTime.now();
+        this.duration = Duration.ofHours(1);
+    }
+
+    public Event(int id, String name) {
+        this.id = id;
+        this.name = name;
+        this.startDateTime = LocalDateTime.now();
+        this.duration = Duration.ofHours(1);
+    }
+
+
+    public Event(int id, String name, LocalDateTime startDateTime, Duration duration) {
+        this.id = id;
         this.name = name;
         this.startDateTime = startDateTime;
         this.duration = duration;
+    }
+
+    public void addTag(String tag) {
+        tags.add(tag);
+    }
+
+    public int addMemo(Memo newMemo) {
+        if(this.memo == null){
+            this.memo = newMemo;
+            newMemo.addEvent(this);
+            return 1; //SUCCESS
+        }
+        else {
+            return -1; //ERROR
+        }
+
     }
 
     /**
@@ -29,7 +68,11 @@ public class Event {
      * It's here for debugging purposes.
      */
     public String toString() {
-        return String.format("E: %s @ %s, DUR: %s", name, startDateTime.toString(), duration.toString());
+        return String.format("E# %d %s @ %s, DUR: %s", id, name, startDateTime.toString(), duration.toString());
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
