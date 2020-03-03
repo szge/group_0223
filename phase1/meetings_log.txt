@@ -1,0 +1,34 @@
+Changelog Monday 02 March 10:20pm
+- Danial suggested that events should have a static variable to keep track of the number of existing events
+- And that way they can assign their own ID when they are created
+- instead of EventCreator keeping track and assigning them an ID
+
+- Danial also suggested having Series/Memos/Alerts etc track the ID of the event they are associated with
+- As opposed to keeping a reference to the event they are associated with
+
+- Changes discussed over facebook chat
+
+Meeting 4 - Monday, 02 March @ Bahen
+- Jonathan was unable to attend
+- Went over Alex's more developed design
+- Allocated parts to work on this week before Friday
+- Alex: CalendarManager, CreatorManager classes
+- Danial: DatabaseManager, Event/Series/Memo/Alert Database Classes
+- Emily: Event/Series/Memo/Alert base classes
+- Arsham: Event/Series/Memo/Alert Creator Classes
+- Jonathan's allocation TBD
+
+- Todo: User interface @ saving/storing method not decided yet
+
+
+Meeting 3 - Friday, 27 Feb (Call on Discord)
+- Discussed how consolidating a design was taking too long
+- Alex volunteered to put together a design based on everyone's input on Saturday
+- That way the design could be complete faster and we can get to work sooner
+
+Meeting 2 - Thursday, 26 Feb @ Bahen
+- Went over everyone's A2 designs and tried to put them together
+
+Meeting 1 - Tuesday, 24 Feb @ Lab
+- Alex was unable to attend (sick)
+- Group discussed their designs from Assignment 2
