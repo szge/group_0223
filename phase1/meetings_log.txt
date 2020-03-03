@@ -1,3 +1,16 @@
+Meeting 5 - Tuesday, 03 March @ Lab
+- Talked with Brenna TA, she gave us advice on how to simplify design
+- Some overhauls needed:
+- Will add a user class
+- Will remove all creator classes (this can be done by Calendar)
+- Added managers for alerts, events, memos, series
+
+- New assignments:
+- Alex: Calendar, user manager, user
+- Danial: Data manager
+- Jonathan: Interface, Main
+- Emily: Event, Memo, Alert, Series
+
 Changelog Monday 02 March 10:20pm
 - Danial suggested that events should have a static variable to keep track of the number of existing events
 - And that way they can assign their own ID when they are created
