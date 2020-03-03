@@ -3,19 +3,14 @@ import java.util.ArrayList;
 public class Memo {
 
     private String contents;
-    private ArrayList<Event> events;
-
-    public Memo(){
-        events = new ArrayList<>();
-    }
+    private ArrayList<Integer> events;
 
     public Memo(String contents) {
         this.contents = contents;
         events = new ArrayList<>();
     }
 
-    public String toString()
-    {
+    public String toString(){
         return contents;
     }
 
@@ -25,21 +20,20 @@ public class Memo {
      * @return -1 if the event is already in its events list, 1 if success
      */
     public int addEvent(Event newEvent) {
-        if (events.contains(newEvent)) {
+        if (events.contains(newEvent.getId())) {
             return -1; //FAILURE
         }
         else {
-            events.add(newEvent);
+            events.add(newEvent.getId());
             return 1; //SUCCESS
         }
     }
 
     /**
      * getEvents()
-     * @return the ArrayList of events this memo is associated with
+     * @return the ArrayList of the ids of the events this memo is associated with
      */
-    public ArrayList<Event> getEvents(){
+    public ArrayList<Integer> getEvents(){
         return events;
     }
-
 }

@@ -15,6 +15,7 @@ public class Event {
      * IMPORTANT: in the current implementation, we don't store an end time.
      * We store a start time and a duration.
      */
+    private static int numEvents = 0;
     private String name;
     private LocalDateTime startDateTime;
     private Duration duration;
@@ -27,26 +28,21 @@ public class Event {
     private Memo memo = null;
 
 
-    public Event() {
-        this.id = 0;
-        this.name = "";
-        this.startDateTime = LocalDateTime.now();
-        this.duration = Duration.ofHours(1);
-    }
-
-    public Event(int id, String name) {
-        this.id = id;
-        this.name = name;
-        this.startDateTime = LocalDateTime.now();
-        this.duration = Duration.ofHours(1);
-    }
-
-
-    public Event(int id, String name, LocalDateTime startDateTime, Duration duration) {
-        this.id = id;
+    public Event(String name, LocalDateTime startDateTime, Duration duration) {
+        numEvents ++;
+        this.id = numEvents;
         this.name = name;
         this.startDateTime = startDateTime;
         this.duration = duration;
+    }
+
+    public Event(String name, LocalDateTime startDateTime, Duration duration, Memo memo) {
+        numEvents ++;
+        this.id = numEvents;
+        this.name = name;
+        this.startDateTime = startDateTime;
+        this.duration = duration;
+        this.memo = memo;
     }
 
     public void addTag(String tag) {
@@ -58,11 +54,9 @@ public class Event {
             this.memo = newMemo;
             newMemo.addEvent(this);
             return 1; //SUCCESS
-        }
-        else {
+        } else {
             return -1; //ERROR
         }
-
     }
 
     public ArrayList<String> getTags() {
