@@ -22,8 +22,10 @@ public class Event {
     private int id;
 
     private ArrayList<String> tags;
+    private ArrayList<Alert> alerts;
 
     private Memo memo = null;
+
 
     public Event() {
         this.id = 0;
@@ -61,6 +63,10 @@ public class Event {
             return -1; //ERROR
         }
 
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
     }
 
     /**

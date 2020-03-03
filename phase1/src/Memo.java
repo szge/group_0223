@@ -6,12 +6,12 @@ public class Memo {
     private ArrayList<Event> events;
 
     public Memo(){
-        events = new ArrayList();
+        events = new ArrayList<>();
     }
 
     public Memo(String contents) {
         this.contents = contents;
-        events = new ArrayList();
+        events = new ArrayList<>();
     }
 
     public String toString()
