@@ -22,8 +22,7 @@ public class Memo {
     public int addEvent(Event newEvent) {
         if (events.contains(newEvent.getId())) {
             return -1; //FAILURE
-        }
-        else {
+        } else {
             events.add(newEvent.getId());
             return 1; //SUCCESS
         }
