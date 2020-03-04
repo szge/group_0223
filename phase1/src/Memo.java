@@ -5,7 +5,12 @@ public class Memo {
     private String contents;
     private ArrayList<Integer> events;
 
+    private int id;
+    private static int numMemos = 0;
+
     public Memo(String contents) {
+        numMemos++;
+        id = numMemos;
         this.contents = contents;
         events = new ArrayList<>();
     }
@@ -15,9 +20,9 @@ public class Memo {
     }
 
     /**
-     * Add an event to this memo's list of associated events
-     * @param newEvent the event being added
-     * @return -1 if the event is already in its events list, 1 if success
+     * Add the id of an event to this memo's list of associated events
+     * @param newEvent the event whose id is being added
+     * @return -1 if the event id is already in its events list, 1 if successfully added
      */
     public int addEvent(Event newEvent) {
         if (events.contains(newEvent.getId())) {

@@ -8,7 +8,6 @@ public class Event {
      * IMPORTANT: in the current implementation, we don't store an end time.
      * We store a start time and a duration.
      */
-
     private String name;
     private LocalDateTime startDateTime;
     private Duration duration;
@@ -57,10 +56,6 @@ public class Event {
         return tags;
     }
 
-    /**
-     * I don't expect toString() to be used in production
-     * It's here for debugging purposes.
-     */
     public String toString() {
         return String.format("E# %d %s @ %s, DUR: %s", id, name, startDateTime.toString(), duration.toString());
     }
@@ -73,9 +68,6 @@ public class Event {
         return name;
     }
 
-    /**
-     * We allow getting the start DateTime, start Date and start Time
-     */
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
@@ -88,11 +80,6 @@ public class Event {
         return startDateTime.toLocalTime();
     }
 
-    /**
-     * End DateTime is calculated from startDateTime and duration.
-     *
-     * We allow getting the end DateTime, end Date and end Time.
-     */
     public LocalDateTime getEndDateTime() {
         return startDateTime.plus(duration);
     }
@@ -105,16 +92,4 @@ public class Event {
         return getEndDateTime().toLocalTime();
     }
 
-
-    // The following code was used to debug and test the class. Please do not use this in production.
-    /*
-    public static void main(String[] args)
-    {
-        Event e1 = new Event("Event 1", LocalDateTime.of(2020, Month.FEBRUARY, 26, 13, 45), Duration.ofHours(30));
-        System.out.println(e1);
-        System.out.println(e1.getStartDate().toString());
-        System.out.println(e1.getStartTime().toString());
-        System.out.println(e1.getStartDateTime().toString());
-    }
-     */
 }

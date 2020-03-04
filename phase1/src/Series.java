@@ -13,19 +13,20 @@ public class Series {
         this.name = name;
     }
 
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
     public String getName() {
         return this.name;
     }
 
-    public int addEvent(Event event) {
-        if (events.contains(event.getId())) {
+    /**
+     * Add the id of an event to this memo's list of associated events
+     * @param newEvent the event whose id is being added
+     * @return -1 if the event id is already in its events list, 1 if successfully added
+     */
+    public int addEvent(Event newEvent) {
+        if (events.contains(newEvent.getId())) {
             return -1; //FAILURE
         } else {
-            events.add(event.getId());
+            events.add(newEvent.getId());
             return 1; //SUCCESS
         }
     }
