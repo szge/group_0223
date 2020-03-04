@@ -14,6 +14,10 @@ public class Alert {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String toString() {
         return String.format("%s at %s",  name, dateTime.toString());
     }

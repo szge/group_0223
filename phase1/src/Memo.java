@@ -15,20 +15,24 @@ public class Memo {
         events = new ArrayList<>();
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String toString(){
         return contents;
     }
 
     /**
      * Add the id of an event to this memo's list of associated events
-     * @param newEvent the event whose id is being added
+     * @param id the id of the event being added
      * @return -1 if the event id is already in its events list, 1 if successfully added
      */
-    public int addEvent(Event newEvent) {
-        if (events.contains(newEvent.getId())) {
+    public int addEvent(int id) {
+        if (events.contains(id)){
             return -1; //FAILURE
         } else {
-            events.add(newEvent.getId());
+            events.add(id);
             return 1; //SUCCESS
         }
     }

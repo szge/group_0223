@@ -13,6 +13,10 @@ public class Series {
         this.name = name;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return this.name;
     }

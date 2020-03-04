@@ -43,12 +43,12 @@ public class Event {
     }
 
     public int addMemo(Memo newMemo) {
-        if(this.memo == null){
-            this.memo = newMemo;
-            newMemo.addEvent(this);
+        if(memo == null){
+            memo = newMemo;
+            newMemo.addEvent(id);
             return 1; //SUCCESS
         } else {
-            return -1; //ERROR
+            return -1; //FAILURE
         }
     }
 
@@ -56,12 +56,12 @@ public class Event {
         return tags;
     }
 
-    public String toString() {
-        return String.format("E# %d %s @ %s, DUR: %s", id, name, startDateTime.toString(), duration.toString());
-    }
-
     public int getId() {
         return id;
+    }
+
+    public String toString() {
+        return String.format("E# %d %s @ %s, DUR: %s", id, name, startDateTime.toString(), duration.toString());
     }
 
     public String getName() {
