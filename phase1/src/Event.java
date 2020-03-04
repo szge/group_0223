@@ -1,10 +1,3 @@
-/**
- * class Event
- * A standard, single event used in our calendar.
- *
- * @author: Alex Tobias
- */
-
 import java.time.*;
 import java.util.ArrayList;
 
@@ -15,30 +8,31 @@ public class Event {
      * IMPORTANT: in the current implementation, we don't store an end time.
      * We store a start time and a duration.
      */
-    private static int numEvents = 0;
+
     private String name;
     private LocalDateTime startDateTime;
     private Duration duration;
 
+    private Memo memo = null;
+
     private int id;
+    private static int numEvents = 0;
 
     private ArrayList<String> tags;
     private ArrayList<Alert> alerts;
 
-    private Memo memo = null;
-
 
     public Event(String name, LocalDateTime startDateTime, Duration duration) {
-        numEvents ++;
-        this.id = numEvents;
+        numEvents++;
+        id = numEvents;
         this.name = name;
         this.startDateTime = startDateTime;
         this.duration = duration;
     }
 
     public Event(String name, LocalDateTime startDateTime, Duration duration, Memo memo) {
-        numEvents ++;
-        this.id = numEvents;
+        numEvents++;
+        id = numEvents;
         this.name = name;
         this.startDateTime = startDateTime;
         this.duration = duration;
@@ -79,7 +73,6 @@ public class Event {
         return name;
     }
 
-
     /**
      * We allow getting the start DateTime, start Date and start Time
      */
@@ -94,7 +87,6 @@ public class Event {
     public LocalTime getStartTime() {
         return startDateTime.toLocalTime();
     }
-
 
     /**
      * End DateTime is calculated from startDateTime and duration.

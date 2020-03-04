@@ -28,10 +28,6 @@ public class Memo {
         }
     }
 
-    /**
-     * getEvents()
-     * @return the ArrayList of the ids of the events this memo is associated with
-     */
     public ArrayList<Integer> getEvents(){
         return events;
     }

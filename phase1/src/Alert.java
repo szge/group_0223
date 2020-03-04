@@ -6,9 +6,11 @@ public class Alert {
     private LocalDateTime dateTime;
 
     private int id;
+    private static int numAlerts = 0;
 
     public Alert(String name, int eid) {
-        this.id = 0;
+        numAlerts++;
+        this.id = numAlerts;
         this.name = name;
     }
 
