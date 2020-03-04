@@ -3,11 +3,6 @@ import java.util.ArrayList;
 
 public class Event {
 
-    /**
-     * Member variables
-     * IMPORTANT: in the current implementation, we don't store an end time.
-     * We store a start time and a duration.
-     */
     private String name;
     private LocalDateTime startDateTime;
     private Duration duration;
@@ -19,7 +14,6 @@ public class Event {
 
     private ArrayList<String> tags;
     private ArrayList<Alert> alerts;
-
 
     public Event(String name, LocalDateTime startDateTime, Duration duration) {
         numEvents++;
@@ -43,7 +37,7 @@ public class Event {
     }
 
     public int addMemo(Memo newMemo) {
-        if(memo == null){
+        if (memo == null) {
             memo = newMemo;
             newMemo.addEvent(id);
             return 1; //SUCCESS
@@ -52,8 +46,23 @@ public class Event {
         }
     }
 
+    // currently this supports an event having two alerts at the same time
+    // an event can have multiple individual alerts as well as frequent alerts
+    public int addAlert(Alert newAlert) {
+        if (newAlert.getLocalDateTime().isAfter(this.getEndDateTime())) {
+            return -1; // FAILURE
+        } else {
+            alerts.add(newAlert);
+            return 1; //SUCCESS
+        }
+    }
+
     public ArrayList<String> getTags() {
         return tags;
+    }
+
+    public ArrayList<Alert> getAlerts() {
+        return alerts;
     }
 
     public int getId() {

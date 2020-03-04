@@ -21,6 +21,10 @@ public class Series {
         return this.name;
     }
 
+    public ArrayList<Integer> getEvents() {
+        return this.events;
+    }
+
     /**
      * Add the id of an event to this memo's list of associated events
      * @param newEvent the event whose id is being added
@@ -33,10 +37,6 @@ public class Series {
             events.add(newEvent.getId());
             return 1; //SUCCESS
         }
-    }
-
-    public ArrayList<Integer> getEvents() {
-        return this.events;
     }
 
 }

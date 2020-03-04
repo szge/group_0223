@@ -19,7 +19,11 @@ public class Memo {
         return id;
     }
 
-    public String toString(){
+    public ArrayList<Integer> getEvents() {
+        return events;
+    }
+
+    public String toString() {
         return contents;
     }
 
@@ -28,8 +32,8 @@ public class Memo {
      * @param id the id of the event being added
      * @return -1 if the event id is already in its events list, 1 if successfully added
      */
-    public int addEvent(int id) {
-        if (events.contains(id)){
+    public int addEvent(Integer id) {
+        if (events.contains(id)) {
             return -1; //FAILURE
         } else {
             events.add(id);
@@ -37,7 +41,4 @@ public class Memo {
         }
     }
 
-    public ArrayList<Integer> getEvents(){
-        return events;
-    }
 }

@@ -8,30 +8,33 @@ public class Alert {
     private int id;
     private static int numAlerts = 0;
 
-    public Alert(String name, int eid) {
+    public boolean userAlerted = false;
+
+    public Alert(String name, LocalDateTime when) {
         numAlerts++;
         this.id = numAlerts;
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
+        dateTime = when;
     }
 
     public String toString() {
         return String.format("%s at %s",  name, dateTime.toString());
     }
 
-    public void setDateTime(LocalDateTime datetime) {
-        dateTime = datetime;
+    public int getId() {
+        return id;
     }
 
-    public LocalDate getLocalDate(){
+    public LocalDate getLocalDate() {
         return this.dateTime.toLocalDate();
     }
 
-    public LocalTime getLocalTime(){
+    public LocalTime getLocalTime() {
         return this.dateTime.toLocalTime();
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return dateTime;
     }
 
 }
