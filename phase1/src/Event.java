@@ -5,6 +5,7 @@ public class Event {
 
     private String name;
     private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private Duration duration;
 
     private Memo memo = null;
@@ -15,20 +16,22 @@ public class Event {
     private ArrayList<String> tags;
     private ArrayList<Alert> alerts;
 
-    public Event(String name, LocalDateTime startDateTime, Duration duration) {
+    public Event(String name, LocalDateTime start, LocalDateTime end) {
         numEvents++;
         id = numEvents;
         this.name = name;
-        this.startDateTime = startDateTime;
-        this.duration = duration;
+        startDateTime = start;
+        endDateTime = end;
+        this.duration = Duration.between(start, end);
     }
 
-    public Event(String name, LocalDateTime startDateTime, Duration duration, Memo memo) {
+    public Event(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
         numEvents++;
         id = numEvents;
         this.name = name;
-        this.startDateTime = startDateTime;
-        this.duration = duration;
+        startDateTime = start;
+        endDateTime = end;
+        duration = Duration.between(start, end);
         this.memo = memo;
     }
 
@@ -49,7 +52,7 @@ public class Event {
     // currently this supports an event having two alerts at the same time
     // an event can have multiple individual alerts as well as frequent alerts
     public int addAlert(Alert newAlert) {
-        if (newAlert.getLocalDateTime().isAfter(this.getEndDateTime())) {
+        if (newAlert.getLocalDateTime().isAfter(endDateTime)) {
             return -1; // FAILURE
         } else {
             alerts.add(newAlert);
@@ -70,7 +73,7 @@ public class Event {
     }
 
     public String toString() {
-        return String.format("E# %d %s @ %s, DUR: %s", id, name, startDateTime.toString(), duration.toString());
+        return String.format("E# %d %s @ %s until %s", id, name, startDateTime.toString(), endDateTime.toString());
     }
 
     public String getName() {
@@ -81,24 +84,8 @@ public class Event {
         return startDateTime;
     }
 
-    public LocalDate getStartDate() {
-        return startDateTime.toLocalDate();
-    }
-
-    public LocalTime getStartTime() {
-        return startDateTime.toLocalTime();
-    }
-
     public LocalDateTime getEndDateTime() {
-        return startDateTime.plus(duration);
-    }
-
-    public LocalDate getEndDate() {
-        return getEndDateTime().toLocalDate();
-    }
-
-    public LocalTime getEndTime() {
-        return getEndDateTime().toLocalTime();
+        return endDateTime;
     }
 
 }
