@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 private class MemoManager {
 
-    HashMap<String, Memo> store; //holds a list of the Memos
+    private HashMap<String, Memo> store; //holds a list of the Memos
 
     public MemoManager(){
         this.store = new HashMap<String, Memo>();
