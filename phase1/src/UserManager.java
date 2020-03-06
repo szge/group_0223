@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class UserManager {
 
-    private ArrayList<JSONObject> users;
     private JSONArray userJsonArray;
 
     /**
