@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -20,7 +22,8 @@ import java.util.ArrayList;
 
 public class UserManager {
 
-    ArrayList<JSONObject> users;
+    private ArrayList<JSONObject> users;
+    private JSONArray userJsonArray;
 
     /**
      * @author Alex
@@ -32,13 +35,13 @@ public class UserManager {
      */
     public UserManager()
     {
-        JSONParser jsonParser = new JSONParser();
-
-        try(FileReader reader = new FileReader("users.json"))
+        try(FileReader reader = new FileReader("src/users.json"))
         {
-            Object obj = jsonParser.parse(reader);
 
-            users = (JSONArray) obj;
+            JSONParser jsonParser = new JSONParser();
+            Object jsonText = jsonParser.parse(reader);
+            JSONArray jsonArray = (JSONArray) jsonText;
+            userJsonArray = (JSONArray) jsonText;
 
         } catch(FileNotFoundException e) {
             System.out.println("Users.txt not found!");
@@ -61,14 +64,16 @@ public class UserManager {
      * -2 if username exists but password is wrong.
      */
     public int login(String username, String password) {
-        for (JSONObject usr : users) {
-            if (((String) usr.get("username")).equals(username)) {
-                if (((String) usr.get("password")).equals(password)) {
-                    return (int) usr.get("id");
+        for(Object u: userJsonArray)
+        {
+            JSONObject uo = (JSONObject) u;
+            if (uo.get("username").equals(username)) {
+                if (uo.get("password").equals(password)) {
+                    return (int) uo.get("id");
                 }
                 return -2;
+                }
             }
-        }
         return -1;
     }
 
@@ -88,9 +93,11 @@ public class UserManager {
      */
     public Boolean createNewUser(String username, String password)
     {
-        for (JSONObject usr: users) {
-            if (((String) usr.get("username")).equals(username)) {
-                return Boolean.FALSE; // a user with that name already exists
+        for(Object u: userJsonArray)
+        {
+            JSONObject uo = (JSONObject) u;
+            if (uo.get("username").equals(username)) {
+                return Boolean.FALSE;
             }
         }
         // if we've reached this point, then the username does not previously exists
@@ -99,10 +106,10 @@ public class UserManager {
         newUser.put("username", username);
         newUser.put("password", password);
         newUser.put("id", getNextAvailableID());
-        users.add(newUser);
+        userJsonArray.add(newUser);
 
-        try(FileWriter file = new FileWriter("users.json", true)) {
-            file.write(newUser.toJSONString());
+        try(FileWriter file = new FileWriter("src/users.json")) {
+            file.write(userJsonArray.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,14 +129,15 @@ public class UserManager {
      */
     private int getNextAvailableID()
     {
-        if (users.size() == 0) {
+        if (userJsonArray.size() == 0) {
             return 1;
         }
         int curr_max = 0;
-        for(JSONObject usr: users)
+        for(Object userObject: userJsonArray)
         {
-            int userID = (int) usr.get("id");
-            if ((int) usr.get("id") > curr_max)
+            JSONObject usr = (JSONObject) userObject;
+            int userID = ((Long)usr.get("id")).intValue();
+            if (userID > curr_max)
              {
                  curr_max = userID;
              }
