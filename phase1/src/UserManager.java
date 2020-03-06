@@ -6,19 +6,15 @@
  */
 
 
-import java.io.FileReader;
-import java.io.FileWriter;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class UserManager {
 
@@ -68,11 +64,11 @@ public class UserManager {
             JSONObject uo = (JSONObject) u;
             if (uo.get("username").equals(username)) {
                 if (uo.get("password").equals(password)) {
-                    return (int) uo.get("id");
+                    return Integer.parseInt(uo.get("id").toString());
                 }
                 return -2;
-                }
             }
+        }
         return -1;
     }
 
@@ -135,13 +131,26 @@ public class UserManager {
         for(Object userObject: userJsonArray)
         {
             JSONObject usr = (JSONObject) userObject;
-            int userID = ((Long)usr.get("id")).intValue();
+            int userID = Integer.parseInt(usr.get("id").toString());
             if (userID > curr_max)
-             {
-                 curr_max = userID;
-             }
+            {
+                curr_max = userID;
+            }
         }
         return (curr_max+1);
     }
 
+    public void deleteUserByName(int userID) {
+        System.out.println("deletion of: " + userID);
+        Object temp = new Object();
+        for(Object u: userJsonArray) {
+            JSONObject uo = (JSONObject) u;
+            if(Integer.parseInt(uo.get("id").toString()) == (userID)){
+                System.out.println("found uid");
+                temp = (Object) u;
+                break;
+            }
+        }
+        userJsonArray.remove(temp);
+    }
 }

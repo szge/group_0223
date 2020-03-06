@@ -34,3 +34,20 @@
 //    }
 //
 //}
+
+public class CalendarManager {
+    public UserManager userMg = new UserManager();
+
+    public int login(String user, String pass){
+        return userMg.login(user, pass);
+    }
+
+    public boolean createNewUser(String user, String pass){
+        return userMg.createNewUser(user, pass);
+    }
+
+    public void deleteUserID(int userID) {
+        userMg.deleteUserByName(userID);
+    }
+}
+
