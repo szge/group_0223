@@ -88,4 +88,12 @@ public class Event {
         return endDateTime;
     }
 
+    //Arsham's code
+    public void removeTag(String content){
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).equals(content)){
+                tags.remove(i);
+            }
+        }
+    }
 }

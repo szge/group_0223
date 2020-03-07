@@ -41,4 +41,9 @@ public class Memo {
         }
     }
 
+    //Beginning of Arsham's methods
+    public void removeEvent(int id){
+        this.events.remove(id);
+    }
+
 }
