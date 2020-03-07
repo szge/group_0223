@@ -30,7 +30,7 @@ public class UserManager {
      */
     public UserManager()
     {
-        try(FileReader reader = new FileReader("phase1/src/users.json"))
+        try(FileReader reader = new FileReader("src/users.json"))
         {
 
             JSONParser jsonParser = new JSONParser();
@@ -103,11 +103,7 @@ public class UserManager {
         newUser.put("id", getNextAvailableID());
         userJsonArray.add(newUser);
 
-        try(FileWriter file = new FileWriter("src/users.json")) {
-            file.write(userJsonArray.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writeUserJsonFile();
 
         return Boolean.TRUE;
     }
@@ -140,6 +136,10 @@ public class UserManager {
         return (curr_max+1);
     }
 
+    /**
+     * @author Jonathan, Alex
+     * @param userID ID of user to remove
+     */
     public void deleteUserByName(int userID) {
         System.out.println("deletion of: " + userID);
         Object temp = new Object();
@@ -152,5 +152,18 @@ public class UserManager {
             }
         }
         userJsonArray.remove(temp);
+
+        writeUserJsonFile();
+    }
+
+    /**
+     * Writes userJsonArray to users.json
+     */
+    public void writeUserJsonFile() {
+        try(FileWriter file = new FileWriter("src/users.json")) {
+            file.write(userJsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
