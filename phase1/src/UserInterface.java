@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -99,7 +100,7 @@ public class UserInterface {
             String line = sc.nextLine();
             try {
                 int[] date = Arrays.stream(line.split("-")).mapToInt(Integer::parseInt).toArray();
-                Event[] events = calendarManager.getEventsByDate(date);
+                ArrayList<Event> events = calendarManager.getEventsByDate(date);
 
                 System.out.println("Event list on " + Arrays.toString(date) + ":");
                 System.out.println("   [id]   |           [name]           |       [date]       |");
@@ -156,13 +157,13 @@ public class UserInterface {
     }
 
     private static void viewAlerts() {
-        Alert[] alerts = calendarManager.getAlerts();
+        ArrayList<Alert> alerts = calendarManager.getAlerts();
         for(Alert a : alerts){
             System.out.println(a.toString());
             System.out.println("Press any key to acknowledge this event.");
             sc.nextLine();
         }
-        if(alerts.length == 0){
+        if(alerts.size() == 0){
             System.out.println("You have no alerts waiting to be acknowledged.");
         } else {
             System.out.println("That concludes your current list of alerts. You have no more alerts to be acknowledged.");
