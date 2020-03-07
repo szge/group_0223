@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -33,7 +34,7 @@ public class UserInterface {
                 System.out.println("Welcome " + currUser);
                 boolean logout = false;
                 while (!logout) {
-                    System.out.println("Would you like to:\n(1) View alerts\n(2) View your events\n(3) Logout");
+                    System.out.println("Would you like to:\n(1) View/add alerts\n(2) View/modify your events\n(3) Logout");
                     System.out.println("Please select 1, 2, or 3:");
                     String option2 = sc.nextLine();
                     if (option2.equals("1")) {
@@ -65,8 +66,13 @@ public class UserInterface {
              *   30969   |   Lunch    |   (some datetime)
              *  */
 
+            Event[] events = calendarManager.getEvents();
+            for(Event ev : events){
+                System.out.println(ev.toString());
+            }
+
             System.out.println("Would you like to:\n(1) Create event(s)\n(2) View a specific event\n(3) Delete events\n(4) View events by day\n(5) Exit event list");
-            System.out.println("Please select 1, 2, or 3:");
+            System.out.println("Please select 1, 2, 3, 4, or 5:");
 
             String option3 = sc.nextLine();
 
@@ -87,9 +93,54 @@ public class UserInterface {
     }
 
     private static void viewEventsByDay() {
+        boolean succ =false;
+        while(!succ){
+            System.out.println("Please enter the date you wish to access in the format DD-MM-YYYY, e.g. 29-2-2020 or 04-05-1996:");
+            String line = sc.nextLine();
+            try {
+                int[] date = Arrays.stream(line.split("-")).mapToInt(Integer::parseInt).toArray();
+                Event[] events = calendarManager.getEventsByDate(date);
+
+                System.out.println("Event list on " + Arrays.toString(date) + ":");
+                System.out.println("   [id]   |           [name]           |       [date]       |");
+                System.out.println("=============================================================");
+
+                /* TODO: Get event list from calendarManager and show it here, with the format
+                 *    [id]   |   [name]   |   [date]
+                 * ===================================
+                 *   30594   | Book Club  |   (some datetime)
+                 *   30969   |   Lunch    |   (some datetime)
+                 *  */
+
+                for(Event ev : events){
+                    System.out.println(ev.toString());
+                }
+
+                System.out.println("Press any key to continue.");
+                sc.nextLine();
+
+                succ = true;
+            } catch (Exception e) {
+                System.out.println("Sorry, invalid input. Please try again.");
+            }
+        }
     }
 
     private static void deleteEvents() {
+        boolean succ = false;
+        while(!succ) {
+            System.out.println("Please enter a comma separated list of event IDs to delete, e.g. '5, 39, 6'");
+            String line = sc.nextLine();
+            try {
+                int[] delete = Arrays.stream(line.split(", ")).mapToInt(Integer::parseInt).toArray();
+                calendarManager.deleteEvents(delete);
+                System.out.println("Event IDs " + Arrays.toString(delete) + " successfully deleted.");
+
+                succ = true;
+            } catch (Exception e) {
+                System.out.println("Sorry, invalid input. Please try again.");
+            }
+        }
     }
 
     private static void viewEvent() {
@@ -97,12 +148,27 @@ public class UserInterface {
         String id = sc.nextLine();
         Event event = calendarManager.getEventByID(id);
         System.out.println(event);
+        System.out.println("Press any key to continue.");
+        sc.nextLine();
     }
 
     private static void createEvents() {
     }
 
     private static void viewAlerts() {
+        Alert[] alerts = calendarManager.getAlerts();
+        for(Alert a : alerts){
+            System.out.println(a.toString());
+            System.out.println("Press any key to acknowledge this event.");
+            sc.nextLine();
+        }
+        if(alerts.length == 0){
+            System.out.println("You have no alerts waiting to be acknowledged.");
+        } else {
+            System.out.println("That concludes your current list of alerts. You have no more alerts to be acknowledged.");
+        }
+        System.out.println("Press any key to continue.");
+        sc.nextLine();
     }
 
 
