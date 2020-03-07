@@ -157,13 +157,13 @@ public class UserInterface {
     }
 
     private static void viewAlerts() {
-        Alert[] alerts = calendarManager.getAlerts();
+        ArrayList<Alert> alerts = calendarManager.getAlerts();
         for(Alert a : alerts){
             System.out.println(a.toString());
             System.out.println("Press any key to acknowledge this event.");
             sc.nextLine();
         }
-        if(alerts.length == 0){
+        if(alerts.size() == 0){
             System.out.println("You have no alerts waiting to be acknowledged.");
         } else {
             System.out.println("That concludes your current list of alerts. You have no more alerts to be acknowledged.");
