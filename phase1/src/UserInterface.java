@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -99,7 +100,7 @@ public class UserInterface {
             String line = sc.nextLine();
             try {
                 int[] date = Arrays.stream(line.split("-")).mapToInt(Integer::parseInt).toArray();
-                Event[] events = calendarManager.getEventsByDate(date);
+                ArrayList<Event> events = calendarManager.getEventsByDate(date);
 
                 System.out.println("Event list on " + Arrays.toString(date) + ":");
                 System.out.println("   [id]   |           [name]           |       [date]       |");
