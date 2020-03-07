@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class UserInterface {
     public static Scanner sc = new Scanner(System.in);
     public static CalendarManager calendarManager = new CalendarManager();
+    public static String currUser;
 
     public static void start(){
         boolean exit = false;
@@ -29,7 +30,41 @@ public class UserInterface {
                     System.out.println("Sorry, invalid input. Please try again.");
                 }
             }
+
+            if(!exit) {
+                System.out.println("Welcome " + currUser);
+                boolean logout = false;
+                while(!logout){
+                    System.out.println("Would you like to:\n(1) View alerts\n(2) View your events\n(3) Logout");
+                    System.out.println("Please select 1, 2, or 3:");
+                    String option2 = sc.nextLine();
+                    if(option2.equals("1")) {
+                        viewAlerts();
+                    } else if(option2.equals("2")) {
+                        viewEvents();
+                    } else if(option2.equals("3")) {
+                        logout = true;
+                    } else {
+                        System.out.println("Sorry, invalid input. Please try again.");
+                    }
+                }
+            }
         }
+    }
+
+    private static void viewEvents() {
+        boolean done = false;
+
+        while(!done){
+            System.out.println("Current event list:");
+
+
+
+            System.out.println("Would you like to:\n(1) Create an event\n(2) Delete events");
+        }
+    }
+
+    private static void viewAlerts() {
     }
 
     public static void login(){
@@ -44,6 +79,7 @@ public class UserInterface {
 
             if(code > 0){
                 System.out.println("Login successful. Welcome " + username);
+                currUser = username;
                 succ = true;
             } else if (code == -1){
                 System.out.println("This username does not exist in the database.");

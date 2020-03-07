@@ -103,8 +103,8 @@ public class DataManager {
         }
         }
 
-    public static void login(String username) throws FileNotFoundException {
-        String filename = "ProgramData.json";
+    public static void login(String username) {
+        String filename = "phase1/src/ProgramData.json";
         File file = new File(filename);
         JSONParser parser = new JSONParser();
         ArrayList<JSONArray> toBeLoaded = new ArrayList<JSONArray>();
@@ -117,8 +117,7 @@ public class DataManager {
             toBeLoaded.add((JSONArray) user.get("Alerts"));
             toBeLoaded.add((JSONArray) user.get("Events"));
             toBeLoaded.add((JSONArray) user.get("Series"));
-        } catch(
-                ParseException | IOException e)
+        } catch(ParseException | IOException e)
         {
             e.printStackTrace();
         }

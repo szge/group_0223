@@ -103,7 +103,7 @@ public class UserManager {
         newUser.put("id", getNextAvailableID());
         userJsonArray.add(newUser);
 
-        try(FileWriter file = new FileWriter("src/users.json")) {
+        try(FileWriter file = new FileWriter("phase1/src/users.json")) {
             file.write(userJsonArray.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
