@@ -1,5 +1,3 @@
-import java.sql.SQLOutput;
-import java.util.Calendar;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -7,12 +5,12 @@ public class UserInterface {
     public static CalendarManager calendarManager = new CalendarManager();
     public static String currUser;
 
-    public static void start(){
+    public static void start() {
         boolean exit = false;
         System.out.println("Welcome!");
-        while(!exit) {
+        while (!exit) {
             boolean login = false;
-            while(!login) {
+            while (!login) {
                 System.out.println("Would you like to login (1), create a new account (2), delete an account (3), or exit the program (4)?: ");
                 System.out.println("Please select 1, 2, 3, or 4: ");
                 String option1 = sc.nextLine();
@@ -31,18 +29,18 @@ public class UserInterface {
                 }
             }
 
-            if(!exit) {
+            if (!exit) {
                 System.out.println("Welcome " + currUser);
                 boolean logout = false;
-                while(!logout){
+                while (!logout) {
                     System.out.println("Would you like to:\n(1) View alerts\n(2) View your events\n(3) Logout");
                     System.out.println("Please select 1, 2, or 3:");
                     String option2 = sc.nextLine();
-                    if(option2.equals("1")) {
+                    if (option2.equals("1")) {
                         viewAlerts();
-                    } else if(option2.equals("2")) {
+                    } else if (option2.equals("2")) {
                         viewEvents();
-                    } else if(option2.equals("3")) {
+                    } else if (option2.equals("3")) {
                         logout = true;
                     } else {
                         System.out.println("Sorry, invalid input. Please try again.");
@@ -55,75 +53,116 @@ public class UserInterface {
     private static void viewEvents() {
         boolean done = false;
 
-        while(!done){
+        while (!done) {
             System.out.println("Current event list:");
+            System.out.println("   [id]   |           [name]           |       [date]       |");
+            System.out.println("=============================================================");
 
+            /* TODO: Get event list from calendarManager and show it here, with the format
+             *    [id]   |   [name]   |   [date]
+             * ===================================
+             *   30594   | Book Club  |   (some datetime)
+             *   30969   |   Lunch    |   (some datetime)
+             *  */
 
+            System.out.println("Would you like to:\n(1) Create event(s)\n(2) View a specific event\n(3) Delete events\n(4) View events by day\n(5) Exit event list");
+            System.out.println("Please select 1, 2, or 3:");
 
-            System.out.println("Would you like to:\n(1) Create an event\n(2) Delete events");
+            String option3 = sc.nextLine();
+
+            if (option3.equals("1")) {
+                createEvents();
+            } else if (option3.equals("2")) {
+                viewEvent();
+            } else if (option3.equals("3")) {
+                deleteEvents();
+            } else if (option3.equals("4")) {
+                viewEventsByDay();
+            } else if (option3.equals("5")) {
+                done = true;
+            } else {
+                System.out.println("Sorry, invalid input. Please try again.");
+            }
         }
+    }
+
+    private static void viewEventsByDay() {
+    }
+
+    private static void deleteEvents() {
+    }
+
+    private static void viewEvent() {
+        System.out.println("Please enter the id of the event that you wish to view:");
+        String id = sc.nextLine();
+        Event event = calendarManager.getEventByID(id);
+        System.out.println(event);
+    }
+
+    private static void createEvents() {
     }
 
     private static void viewAlerts() {
     }
 
-    public static void login(){
+
+    public static void login() {
         boolean succ = false;
 
-        while(!succ){
+        while (!succ) {
             System.out.println("Please login. Enter your username: ");
             String username = sc.nextLine();
             System.out.println("Enter your password:");
             String password = sc.nextLine();
             int code = calendarManager.login(username, password);
 
-            if(code > 0){
+            if (code > 0) {
                 System.out.println("Login successful. Welcome " + username);
                 currUser = username;
                 succ = true;
-            } else if (code == -1){
+            } else if (code == -1) {
                 System.out.println("This username does not exist in the database.");
-            } else if (code == -2){
+            } else if (code == -2) {
                 System.out.println("Sorry, the password is incorrect.");
             }
         }
     }
 
-    public static void createAccount(){
+    public static void createAccount() {
         boolean succ = false;
 
-        while(!succ){
+        while (!succ) {
             System.out.println("Please enter your new username: ");
             String username = sc.nextLine();
             System.out.println("Please enter your new password: ");
             String password = sc.nextLine();
             succ = calendarManager.createNewUser(username, password);
 
-            if(succ){
+            if (succ) {
                 System.out.println("Your profile has been successfully created.");
-            } else{
+            } else {
                 System.out.println("Sorry, that username already exists.");
             }
         }
     }
 
-    public static void deleteAccount(){
+    public static void deleteAccount() {
         boolean succ = false;
 
-        while(!succ){
+        while (!succ) {
             System.out.println("Please login to delete your profile. Enter your username: ");
             String username = sc.nextLine();
             System.out.println("Enter your password:");
             String password = sc.nextLine();
             int code = calendarManager.login(username, password);
 
-            if(code > 0){
+            if (code > 0) {
                 System.out.println("Account successfully deleted.");
                 calendarManager.deleteUserID(code);
                 succ = true;
-            } else if (code == -1){
+            } else if (code == -1) {
                 System.out.println("This username does not exist in the database.");
-            } else if (code == -2){
+            } else if (code == -2) {
                 System.out.println("Sorry, the password is incorrect.");
             }
         }

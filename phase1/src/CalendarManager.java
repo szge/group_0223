@@ -35,19 +35,13 @@
 //
 //}
 
-import org.json.simple.parser.ParseException;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 public class CalendarManager {
     public UserManager userMg = new UserManager();
-    public static DataManager dataMg = new DataManager();
 
     public int login(String user, String pass){
         int code = userMg.login(user, pass);
         if(code > 0){
-            dataMg.login(user);
+//            DataManager.login(user);
         }
         return code;
     }
@@ -60,6 +54,8 @@ public class CalendarManager {
         userMg.deleteUserByName(userID);
     }
 
-
+    public Event getEventByID(String id) {
+        return null;
+    }
 }
 

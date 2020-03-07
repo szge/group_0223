@@ -30,7 +30,7 @@ public class UserManager {
      */
     public UserManager()
     {
-        try(FileReader reader = new FileReader("src/users.json"))
+        try(FileReader reader = new FileReader("phase1/src/users.json"))
         {
 
             JSONParser jsonParser = new JSONParser();
