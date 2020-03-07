@@ -22,7 +22,7 @@ public class Event {
         this.name = name;
         startDateTime = start;
         endDateTime = end;
-        this.duration = Duration.between(start, end);
+        duration = Duration.between(start, end);
     }
 
     public Event(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
@@ -86,6 +86,10 @@ public class Event {
 
     public LocalDateTime getEndDateTime() {
         return endDateTime;
+    }
+
+    public Duration getDuration() {
+        return duration;
     }
 
 }
