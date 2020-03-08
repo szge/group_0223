@@ -1,15 +1,15 @@
 import java.time.LocalDateTime;
-        import java.util.ArrayList;
-        import java.time.*;
+import java.util.ArrayList;
+import java.time.*;
 
-public class EventManager {
+public class OverallManager{
 
     private ArrayList<Event> store; //holds a list of the Memos
     private MemoManager memoManager;
     private AlertManager alertManager;
     private ArrayList<Series> series;
 
-    public EventManager() {
+    public OverallManager() {
         this.store = new ArrayList<>();
         this.series = new ArrayList<>();
         this.memoManager = new MemoManager();
