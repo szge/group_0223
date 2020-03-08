@@ -1,6 +1,8 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,11 +21,18 @@ public class CalendarDataSaver {
      * ArrayList<Event>
      */
     public void saveData (ArrayList<Event> events, ArrayList<Memo> memos, ArrayList<Alert> alerts,
-                             ArrayList<Series> series, JSONObject user){
+                             ArrayList<Series> series, JSONObject obj){
+        JSONObject user = new JSONObject();
         user.put("Events", saveEvents(events));
         user.put("Memos", saveMemos(memos));
         user.put("Alerts", saveAlerts(alerts));
         user.put("Series", saveSeries(series));
+        obj.put("Danial", user);
+        try(FileWriter file = new FileWriter("src/ProgramData.json")) {
+            file.write(obj.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     /**
      * @author Danial
@@ -57,7 +66,11 @@ public class CalendarDataSaver {
                 tags.add(tag);
             }
             obj.put("tags", tags);
-            obj.put("memo id", event.getMemo().getId());
+            if(event.getMemo()!= null) {
+                obj.put("memo id", event.getMemo().getId());
+            }else {
+                obj.put("memo id", null);
+            }
             JSONArray alertIds = new JSONArray();
             for (Alert alert: event.getAlerts()){
                 alertIds.add(alert.getId());

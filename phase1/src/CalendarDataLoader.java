@@ -81,11 +81,10 @@ public class CalendarDataLoader {
                     }
                 }
             }
-//            for(Object t: tags){
-//                System.out.println((String) t);
-//                createdEvent.addTag((String) t);
-//                System.out.println(t);
-//            }
+            for(Object t: tags){
+                System.out.println((String) t);
+                createdEvent.addTag((String) t);
+            }
             for(Object id: alertids){
                 for(Alert alert: CalendarDataFacade.getAlerts()){
                     if((Integer)id == alert.getId()){
