@@ -13,8 +13,8 @@ public class Event {
     private int id;
     private static int numEvents = 0;
 
-    private ArrayList<String> tags;
-    private ArrayList<Alert> alerts;
+    private ArrayList<String> tags = new ArrayList<>();
+    private ArrayList<Alert> alerts = new ArrayList<>();
 
     public Event(String name, LocalDateTime start, LocalDateTime end) {
         numEvents++;
@@ -22,7 +22,7 @@ public class Event {
         this.name = name;
         startDateTime = start;
         endDateTime = end;
-        this.duration = Duration.between(start, end);
+        duration = Duration.between(start, end);
     }
 
     public Event(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
@@ -32,31 +32,30 @@ public class Event {
         startDateTime = start;
         endDateTime = end;
         duration = Duration.between(start, end);
-        this.memo = memo;
+        addMemo(memo);
     }
 
+
+     // add tag to this Events ArrayList of tags
     public void addTag(String tag) {
         tags.add(tag);
     }
 
-    public int addMemo(Memo newMemo) {
+   // add newMemo to this Event, if this Event is already associated with a Memo, update it
+    public void addMemo(Memo newMemo) {
         if (memo == null) {
             memo = newMemo;
             newMemo.addEvent(id);
-            return 1; //SUCCESS
         } else {
-            return -1; //FAILURE
+            editMemo(newMemo);
         }
     }
 
     // currently this supports an event having two alerts at the same time
     // an event can have multiple individual alerts as well as frequent alerts
-    public int addAlert(Alert newAlert) {
-        if (newAlert.getLocalDateTime().isAfter(endDateTime)) {
-            return -1; // FAILURE
-        } else {
+    public void addAlert(Alert newAlert) {
+        if (!newAlert.getLocalDateTime().isAfter(endDateTime)) {
             alerts.add(newAlert);
-            return 1; //SUCCESS
         }
     }
 
@@ -80,16 +79,22 @@ public class Event {
         return name;
     }
 
+    // return the start date and time of this Event
     public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
+    // return the end date and time of this Event
     public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
 
-    //Arsham's code
-    //Romove the tag with content
+    // return the duration of this Event
+    public Duration getDuration() {
+        return duration;
+    }
+
+    // remove the tag with content
     public void removeTag(String content){
         for (int i = 0; i < tags.size(); i++) {
             if (tags.get(i).equals(content)){
@@ -98,41 +103,41 @@ public class Event {
         }
     }
 
-    //returns memo from this event
+    // return the Memo associated with this Event
     public Memo getMemo(){
         return this.memo;
     }
 
-    //edit the name for event
-    public void editName(String name){
-        this.name = name;
+    // change the name of this Event to newName
+    public void editName(String newName) {
+        name = newName;
     }
 
-    //Change the memo for this event
-    public void editMemo(Memo memo){
+    // change the memo associated with this Event
+    public void editMemo(Memo memo) {
         this.memo = memo;
     }
 
-    //change the start of the event
-    public void editStart(LocalDateTime start){
-        if (start.isBefore(this.endDateTime)){
-            this.startDateTime = start;
+    // change the start time and date of this Event
+    public void editStart(LocalDateTime start) {
+        if (start.isBefore(endDateTime)){
+            startDateTime = start;
         }
     }
 
-    //change the end of this event
+    // change the end time and date of this event
     public void editEnd(LocalDateTime end){
         if (end.isAfter(this.startDateTime)){
             this.endDateTime = end;
         }
     }
 
-    //remove the memo
+    //remove the memo associated with this Event
     public void removeMemo(){
         this.memo = null;
     }
 
-    //remove the alert
+    // remove alert from this Events ArrayList of Alerts
     public void removeAlert(Alert alert){
         this.alerts.remove(alert);
     }

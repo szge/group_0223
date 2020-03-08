@@ -17,6 +17,11 @@ public class OverallManager{
     }
 
     //Event methods
+
+    public Event getEvent(int id){
+        return this.eventManager.getEvent(id);
+    }
+
     public void createEvent(String name, LocalDateTime start, LocalDateTime end) {
         this.eventManager.createEvent(name, start, end);
     }
@@ -114,7 +119,7 @@ public class OverallManager{
                                Duration repetition, LocalDateTime absoluteEnd, String name, String content){
         Series series = this.seriesManager.createSerialEvent(startStart, startEnd, repetition, absoluteEnd, name);
         for (int i = 0; i < series.getEvents().size(); i++) {
-            this.addMemo(series.getEvents().get(i), content);
+            this.addMemo(this.eventManager.getEvent(series.getEvents().get(i)), content);
         }
     }
 

@@ -30,8 +30,7 @@ public class Series {
      * @param newEvent the event whose id is being added
      */
     public void addEvent(Event newEvent) {
-        if (events.contains(newEvent.getId())) {
-        } else {
+        if (!events.contains(newEvent.getId())) {
             events.add(newEvent.getId());
         }
     }

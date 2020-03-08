@@ -11,7 +11,7 @@ public class MemoManager {
 
     public Memo addMemo(int id, String content){
         Memo newMemo = null;
-        if (this.store.containsKey(content)){
+        if (!this.store.containsKey(content)){
             newMemo = new Memo(content);
             CalendarDataFacade.addMemo(newMemo);
             this.store.put(content, newMemo);
