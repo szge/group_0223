@@ -9,7 +9,7 @@ public class SeriesManager {
     private EventManager eventManager;
 
     public SeriesManager(EventManager eventManager){
-        this.store = new ArrayList<>();
+        this.store = CalendarDataFacade.getSeries();
         this.eventManager = eventManager;
     }
 

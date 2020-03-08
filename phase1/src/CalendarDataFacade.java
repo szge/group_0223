@@ -17,7 +17,8 @@ public class CalendarDataFacade {
     private static ArrayList<Alert> alerts = new ArrayList<Alert>();
     private static ArrayList<Series> series = new ArrayList<Series>();
     private static CalendarDataLoader loader = new CalendarDataLoader();
-    private static boolean isLoaded = false;
+    private static CalendarDataSaver saver = new CalendarDataSaver();
+    private static JSONObject user;
 
     /**
      * @author Danial
@@ -60,6 +61,10 @@ public class CalendarDataFacade {
         return series;
     }
 
+    public static void addMemo(Memo m){
+        memos.add(m);
+    }
+
     private static  LocalDate timetoDate(LocalDateTime time){
         int year = time.getYear();
         int month = time.getMonthValue();
@@ -76,7 +81,7 @@ public class CalendarDataFacade {
             FileReader reader = new FileReader(file.getAbsolutePath());
             Object obj = parser.parse(reader);
             JSONObject jsonObj = (JSONObject) obj;
-            JSONObject user = (JSONObject) jsonObj.get(username);
+            user = (JSONObject) jsonObj.get(username);
             toBeLoaded.add((JSONArray) user.get("Memos"));
             toBeLoaded.add((JSONArray) user.get("Alerts"));
             toBeLoaded.add((JSONArray) user.get("Events"));
@@ -92,8 +97,17 @@ public class CalendarDataFacade {
         attributes.add(events);
         attributes.add(series);
         loader.loadData(toBeLoaded, attributes);
-        isLoaded = true;
     }
+    public static void logout(){
+        saver.saveData(events, memos, alerts, series, user);
+        events = new ArrayList<Event>();
+        memos = new ArrayList<Memo>();
+        alerts = new ArrayList<Alert>();
+        series = new ArrayList<Series>();
+        user = null;
+
+    }
+
 
     public static ArrayList<Event> getEventsByDate(LocalDate date){
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
@@ -207,8 +221,8 @@ public class CalendarDataFacade {
            System.out.println(event.getId());
            System.out.println(event.getName());
            System.out.println(event.getStartDateTime());
-            System.out.println(event.getEndDateTime());
-            System.out.println(event.getTags());
+           System.out.println(event.getEndDateTime());
+           System.out.println(event.getTags());
         }
     }
 

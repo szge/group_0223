@@ -7,7 +7,7 @@ public class AlertManager {
     private ArrayList<Alert> store; //holds a list of the Memos
 
     public AlertManager(){
-        this.store = new ArrayList<Alert>();
+        this.store = CalendarDataFacade.getAlerts();
         this.serialAlerts = new ArrayList<ArrayList<Alert>>();
     }
 

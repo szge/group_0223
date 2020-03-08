@@ -51,12 +51,7 @@ public class CalendarDataLoader {
         for(Object jmemo: jsonmemos){
             JSONObject jsonmemo = (JSONObject) jmemo;
             String content = (String)jsonmemo.get("content");
-            Memo createdMemo = new Memo(content);
-            for(Object id: (JSONArray)jsonmemo.get("event ids")){
-//                Long  intval = (Long)id;
-                createdMemo.addEvent(((Long) id).intValue());
-            }
-            memos.add(createdMemo);
+            memos.add(new Memo(content));
         }
     }
     /**

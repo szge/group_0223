@@ -13,6 +13,7 @@ public class MemoManager {
         Memo newMemo = null;
         if (this.store.containsKey(content)){
             newMemo = new Memo(content);
+            CalendarDataFacade.addMemo(newMemo);
             this.store.put(content, newMemo);
         }
         this.store.get(content).addEvent(id);
