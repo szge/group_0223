@@ -127,6 +127,19 @@ public class OverallManager{
     }
 
     //Serial Alerts
+    public void addSerialAlerts(Event event, String name, LocalDateTime start,
+                                LocalDateTime finish, Duration repetition){
+        ArrayList<> alerts = this.alertManager.addSerialAlert(name, start, finish, repetition);
+        for (int i = 0; i < alerts.size(); i++) {
+            this.eventManager.addAlert(event, alerts.get(i));
+        }
+    }
 
-    
+    public void deleteSerialAlerts(Event event, Alert alert){
+        ArrayList<Alert> alerts = this.alertManager.removeSerialAlert(alert);
+        for (int i = 0; i < alerts.size(); i++) {
+            this.eventManager.deleteAlert(event, alerts.get(i));
+        }
+    }
+
 }
