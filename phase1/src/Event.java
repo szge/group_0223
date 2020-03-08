@@ -96,4 +96,36 @@ public class Event {
             }
         }
     }
+
+    public Memo getMemo(){
+        return this.memo;
+    }
+
+    public void editName(String name){
+        this.name = name;
+    }
+
+    public void editMemo(Memo memo){
+        this.memo = memo;
+    }
+
+    public void editStart(LocalDateTime start){
+        if (start.isBefore(this.endDateTime)){
+            this.startDateTime = start;
+        }
+    }
+
+    public void editEnd(LocalDateTime end){
+        if (end.isAfter(this.startDateTime)){
+            this.endDateTime = end;
+        }
+    }
+
+    public void removeMemo(){
+        this.memo = null;
+    }
+
+    public void removeAlert(Alert alert){
+        this.alerts.remove(alert);
+    }
 }

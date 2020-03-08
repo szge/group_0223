@@ -45,5 +45,4 @@ public class Memo {
     public void removeEvent(int id){
         this.events.remove(id);
     }
-
 }

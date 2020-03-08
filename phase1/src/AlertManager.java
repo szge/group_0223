@@ -64,7 +64,12 @@ public class AlertManager {
         return alerts;
     }
 
-    public
+    public void edit(Alert alert, String name){
+        ArrayList<Alert> alerts = this.seriesofAlerts(alert);
+        for (int i = 0; i < alerts.size(); i++) {
+            alerts.get(i).changeName(name);
+        }
+    }
 
     public ArrayList<Alert> remainingAlert(int id){
         Alert alerts = null;
