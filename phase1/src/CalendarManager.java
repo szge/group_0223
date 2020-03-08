@@ -1,8 +1,20 @@
+import sun.util.resources.CalendarData;
+
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class CalendarManager {
-    public UserManager userMg = new UserManager();
+
+    private UserManager userMg;
+    private OverallManager overMg;
+
+    public CalendarManager()
+    {
+        userMg = new UserManager();
+        overMg = new OverallManager();
+
+    }
 
     /**
      * Logs in this user.
@@ -18,8 +30,14 @@ public class CalendarManager {
     public int login(String user, String pass){
         int code = userMg.login(user, pass);
         if(code > 0){
-            // TODO: get this to work
-            // DataManager.login(user);
+            try
+            {
+                CalendarDataFacade.login(user);
+            }
+            catch (FileNotFoundException e)
+            {
+                return -1;
+            }
         }
         return code;
     }
@@ -50,10 +68,8 @@ public class CalendarManager {
      * Gets all Events in our calendar
      * @return an array of all events (from DataManager)
      */
-    public Event[] getEvents() {
-        /* TODO: theoretically DataManager should have a getEvents() method and this will just call that and return */
-        // return DataManager.getEvents();
-        return new Event[0];
+    public ArrayList<Event> getEvents() {
+        return CalendarDataFacade.getEvents();
     }
 
     /**
@@ -62,9 +78,11 @@ public class CalendarManager {
      * @return Event matching the ID
      */
     public Event getEventByID(String id) {
-        /* TODO: Get this event by id */
-        // return DataManager.getEventByID(id);
-        return null;
+        return overMg.getEvent(Integer.parseInt(id));
+    }
+
+    public Event getEventByID(int id) {
+        return overMg.getEvent(Integer.parseInt(Integer.toString(id)));
     }
 
     /**
@@ -74,12 +92,11 @@ public class CalendarManager {
      * Iterates through list of event IDs and gets DataManager to delete those events.
      */
     public void deleteEvents(int[] ids) {
-        /*
         for(int i: ids)
         {
-            DataManager.deleteEvent(i);
+            Event e = getEventByID(i);
+            overMg.deleteEvent(e);
         }
-        */
         // TODO: Need to confirm that DataManager.deleteEVent will automatically delete associated alerts
 
         /* TODO: Given a list of event ids, delete all the events corresponding to this user's valid event ids.
@@ -95,14 +112,11 @@ public class CalendarManager {
      * @return array of Events matching the search date (from DataManager)
      */
     public ArrayList<Event> getEventsByDate(int[] dateInfo) {
-        // Does the conversion from the array to LocalDate object
         int dayOfMonth = dateInfo[0];
         int month = dateInfo[1];
         int year = dateInfo[2];
         LocalDate searchDate = LocalDate.of(year, month, dayOfMonth);
         return CalendarDataFacade.getEventsByDate(searchDate);
-        // Use the below instead for purely testing
-        // return new ArrayList<Event>(0);
     }
 
 
@@ -114,9 +128,6 @@ public class CalendarManager {
         /* TODO: theoretically DataManager should have a getAlerts() method and this will just call that and return */
         ArrayList<Alert> alerts = CalendarDataFacade.getAlerts();
         return alerts;
-
-        // Use the below instead for purely testing
-        // return new ArrayList<Event>(0);
     }
 }
 

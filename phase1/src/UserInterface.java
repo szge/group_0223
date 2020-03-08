@@ -67,7 +67,7 @@ public class UserInterface {
              *   30969   |   Lunch    |   (some datetime)
              *  */
 
-            Event[] events = calendarManager.getEvents();
+            ArrayList<Event> events = calendarManager.getEvents();
             for(Event ev : events){
                 System.out.println(ev.toString());
             }
