@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Memo {
 
     private String contents;
-    private ArrayList<Integer> events;
+    private ArrayList<Integer> events = new ArrayList<>();
 
     private int id;
     private static int numMemos = 0;
@@ -32,20 +32,17 @@ public class Memo {
      * @param id the id of the event being added
      */
     public void addEvent(Integer id) {
-        if (events.contains(id)) {
-        } else {
+        if (!events.contains(id)) {
             events.add(id);
         }
     }
 
-    //Beginning of Arsham's methods
-
-    //remove the event with a certain ID from the list of events for a memo
+    // remove the Event with a certain ID from the list of Events for a Memo
     public void removeEvent(int id){
         this.events.remove(id);
     }
 
-    //change the name of a memo
+    // change the name of a memo
     public void changeName(String content){
         this.contents = content;
     }
