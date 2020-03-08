@@ -18,7 +18,9 @@ public class UserInterface {
                 String option1 = sc.nextLine();
                 if (option1.equals("1")) {
                     login();
-                    login = true;
+                    if(currUser != null) {
+                        login = true;
+                    }
                 } else if (option1.equals("2")) {
                     createAccount();
                 } else if (option1.equals("3")) {
@@ -172,13 +174,15 @@ public class UserInterface {
         sc.nextLine();
     }
 
-
-    public static void login() {
+    private static void login() {
         boolean succ = false;
 
         while (!succ) {
-            System.out.println("Please login. Enter your username: ");
+            System.out.println("Please login. Enter your username (Alternatively, input 'Esc' to escape): ");
             String username = sc.nextLine();
+
+            if(username.equals("Esc")) break;
+
             System.out.println("Enter your password:");
             String password = sc.nextLine();
             int code = calendarManager.login(username, password);
@@ -195,7 +199,7 @@ public class UserInterface {
         }
     }
 
-    public static void createAccount() {
+    private static void createAccount() {
         boolean succ = false;
 
         while (!succ) {
@@ -213,7 +217,7 @@ public class UserInterface {
         }
     }
 
-    public static void deleteAccount() {
+    private static void deleteAccount() {
         boolean succ = false;
 
         while (!succ) {

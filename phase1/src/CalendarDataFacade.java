@@ -73,7 +73,7 @@ public class CalendarDataFacade {
     }
 
     public static void login(String username) throws FileNotFoundException {
-        String filename = "src/ProgramData.json";
+        String filename = "phase1/src/ProgramData.json";
         File file = new File(filename);
         JSONParser parser = new JSONParser();
         ArrayList<JSONArray> toBeLoaded = new ArrayList<JSONArray>();
@@ -88,17 +88,17 @@ public class CalendarDataFacade {
             toBeLoaded.add((JSONArray) user.get("Events"));
             toBeLoaded.add((JSONArray) user.get("Series"));
             System.out.println(toBeLoaded.get(2));
-        } catch(
-                ParseException | IOException e)
-        {
+            ArrayList<ArrayList> attributes = new ArrayList<ArrayList>();
+            attributes.add(memos);
+            attributes.add(alerts);
+            attributes.add(events);
+            attributes.add(series);
+            loader.loadData(toBeLoaded, attributes);
+        } catch(ParseException | IOException e) {
             e.printStackTrace();
+        } catch(Exception e) {
+            System.out.println("This user does not currently exist in the database.");
         }
-        ArrayList<ArrayList> attributes = new ArrayList<ArrayList>();
-        attributes.add(memos);
-        attributes.add(alerts);
-        attributes.add(events);
-        attributes.add(series);
-        loader.loadData(toBeLoaded, attributes);
     }
     public static void logout(){
         saver.saveData(events, memos, alerts, series, user);
