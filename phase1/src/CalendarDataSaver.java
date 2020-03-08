@@ -16,7 +16,7 @@ public class CalendarDataSaver {
      * @param memos ArrayList of Memo objects
      * @param alerts ArrayList of Alert objects
      * @param series ArrayList of Series objects
-     * @param user JSONObject representing the user
+     * @param obj JSONObject representing the Json file data
      * @return True if saving process was successful, False otherwise
      * ArrayList<Event>
      */
@@ -27,7 +27,7 @@ public class CalendarDataSaver {
         user.put("Memos", saveMemos(memos));
         user.put("Alerts", saveAlerts(alerts));
         user.put("Series", saveSeries(series));
-        obj.put("Danial", user);
+        obj.put(CalendarDataFacade.usern, user);
         try(FileWriter file = new FileWriter("src/ProgramData.json")) {
             file.write(obj.toJSONString());
         } catch (IOException e) {

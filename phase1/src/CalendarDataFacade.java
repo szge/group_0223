@@ -18,7 +18,8 @@ public class CalendarDataFacade {
     private static ArrayList<Series> series = new ArrayList<Series>();
     private static CalendarDataLoader loader = new CalendarDataLoader();
     private static CalendarDataSaver saver = new CalendarDataSaver();
-    private static JSONObject user;
+    private static JSONObject jfile;
+    public static String usern;
 
     /**
      * @author Danial
@@ -80,8 +81,8 @@ public class CalendarDataFacade {
         try{
             FileReader reader = new FileReader(file.getAbsolutePath());
             Object obj = parser.parse(reader);
-            JSONObject jsonObj = (JSONObject) obj;
-            user = (JSONObject) jsonObj.get(username);
+            jfile = (JSONObject) obj;
+            JSONObject user = (JSONObject) jfile.get(username);
             System.out.println(user);
             toBeLoaded.add((JSONArray) user.get("Memos"));
             toBeLoaded.add((JSONArray) user.get("Alerts"));
@@ -93,6 +94,7 @@ public class CalendarDataFacade {
         {
             e.printStackTrace();
         }
+        usern = username;
         ArrayList<ArrayList> attributes = new ArrayList<ArrayList>();
         attributes.add(memos);
         attributes.add(alerts);
@@ -101,12 +103,13 @@ public class CalendarDataFacade {
         loader.loadData(toBeLoaded, attributes);
     }
     public static void logout(){
-        saver.saveData(events, memos, alerts, series, user);
+        saver.saveData(events, memos, alerts, series, jfile);
         events = new ArrayList<Event>();
         memos = new ArrayList<Memo>();
         alerts = new ArrayList<Alert>();
         series = new ArrayList<Series>();
-        user = null;
+        jfile = null;
+        usern = null;
 
     }
 
@@ -217,22 +220,4 @@ public class CalendarDataFacade {
         }
         return eventsToReturn;
     }
-    public static void main(String[] args) throws FileNotFoundException {
-        System.out.println(events);
-        System.out.println(user);
-        login("Danial");
-        LocalDateTime s = LocalDateTime.of(2020, 3,12,4,3);
-        LocalDateTime e = LocalDateTime.of(2020, 3,13,4,3);
-        Event ev = new Event("test", s, e);
-        events.add(ev);
-        saver.saveData(events, memos, alerts, series, user);
-        for(Event event: events){
-           System.out.println(event.getId());
-           System.out.println(event.getName());
-           System.out.println(event.getStartDateTime());
-           System.out.println(event.getEndDateTime());
-           System.out.println(event.getTags());
-        }
-    }
-
 }
