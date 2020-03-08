@@ -18,12 +18,6 @@ public class EventManager {
         return event;
     }
 
-    public Event createEvent(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
-        Event event = new Event(name, start, end, memo);
-        this.store.add(event);
-        return event;
-    }
-
     public void deleteEvent(Event event) {
         this.store.remove(event);
     }
@@ -57,7 +51,7 @@ public class EventManager {
     }
 
     //3)Alert methods
-    private void deleteAlert(Event event, Alert alert) {
+    public void deleteAlert(Event event, Alert alert) {
         event.removeAlert(alert);
     }
 
@@ -65,8 +59,10 @@ public class EventManager {
         event.addAlert(alert);
     }
 
+
+
     //4)Memo methods
-    private void deleteMemo(Event event) {
+    public void deleteMemo(Event event) {
         event.removeMemo();
     }
 
@@ -82,6 +78,14 @@ public class EventManager {
             }
         }
         return null;
+    }
+
+    public int getEvent(Event event){
+        return event.getId();
+    }
+
+    public Memo getMemo(Event event){
+        return this.getMemo(event);
     }
 
 }

@@ -14,7 +14,7 @@ public class AlertManager {
     public Alert addAlert(String name, LocalDateTime when){
         Alert newAlert = new Alert(name, when);
         this.store.add(newAlert);
-        return newAlert
+        return newAlert;
     }
 
     public ArrayList<Alert> addSerialAlert(String name, LocalDateTime start, LocalDateTime finish, Duration repetition){
@@ -26,16 +26,12 @@ public class AlertManager {
         return alerts;
     }
 
-    public void removeAlert(int id, String alertName){
-        for (int i=0; i<this.store.size(); i++){
-            if (this.store.get(i).getId() == id) {
-                this.store.remove(i);
-            }
-        }
-    }
-
     public void removeAlert(Alert alert){
         this.store.remove(alert);
+    }
+
+    public void editAlertTime(Alert alert, LocalDateTime when){
+        alert.changeTime(when);
     }
 
     public ArrayList<Alert> removeSerialAlert(Alert alert){

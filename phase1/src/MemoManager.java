@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class MemoManager {
 
@@ -24,6 +25,22 @@ public class MemoManager {
             this.store.remove(content);
         }
         //Do we want to remove a memo that isn't associated with any events anymore?
+    }
+
+    public void removeEventMemo(Memo memo, int id){
+        memo.removeEvent(id);
+    }
+
+    public void deleteMemo(Memo memo){
+        this.store.remove(memo.toString());
+    }
+
+    public void editName(Memo memo, String content){
+        memo.changeName(content);
+    }
+
+    public ArrayList<Integer> memoEvent(Memo memo){
+        return memo.getEvents();
     }
 
 }

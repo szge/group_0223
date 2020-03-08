@@ -4,173 +4,129 @@ import java.time.*;
 
 public class OverallManager{
 
-    private ArrayList<Event> store; //holds a list of the Memos
     private MemoManager memoManager;
     private AlertManager alertManager;
-    private ArrayList<Series> series;
+    private SeriesManager seriesManager;
+    private EventManager eventManager;
 
     public OverallManager() {
-        this.store = new ArrayList<>();
-        this.series = new ArrayList<>();
+        this.eventManager = new EventManager();
+        this.seriesManager = new SeriesManager(this.eventManager);
         this.memoManager = new MemoManager();
         this.alertManager = new AlertManager();
     }
 
-    public Event createEvent(String name, LocalDateTime start, LocalDateTime end) {
-        Event event = new Event(name, start, end);
-        this.store.add(event);
-        return event;
+    //Event methods
+    public void createEvent(String name, LocalDateTime start, LocalDateTime end) {
+        this.eventManager.createEvent(name, start, end);
     }
 
-    public void createEvent(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
-        Event event = new Event(name, start, end, memo);
-        this.store.add(event);
+    public void createEvent(String name, LocalDateTime start, LocalDateTime end, String content) {
+        Event event = this.eventManager.createEvent(name, start, end);
+        Memo memo = this.memoManager.addMemo(event.getId(), content);
+        this.eventManager.addMemo(event, memo);
     }
 
-    public void deleteEvent(String name) {
-        for (int i = 0; i < this.store.size(); i++) {
-            if (this.store.get(i).getName().equals(name)) {
-                this.deleteEventAlerts(this.store.get(i));
-                this.deleteEventMemo(this.store.get(i));
-                this.store.remove(this.store.get(i));
-            }
+    public void deleteEvent(Event event) {
+        for (int i = 0; i < event.getAlerts().size(); i++) {
+            this.alertManager.removeAlert(event.getAlerts().get(i));
         }
+        this.memoManager.removeEventMemo(event.getMemo(), event.getId());
     }
 
-    private void deleteEventAlerts(Event event) {
-        for (int j = 0; j < event.getAlerts().size(); j++) {
-            this.alertManager.removeAlert(event.getAlerts().get(j));
-        }
+    public void editEventName(Event event, String content){
+        this.eventManager.editName(event, content);
     }
 
-    private void deleteEventMemo(Event event) {
-        this.memoManager.removeMemo(event.getMemo().toString(), event.getMemo().getId());
-        //need a getter for memo content and memo id
+    public void EditEventStart(Event event, LocalDateTime newStart){
+        this.eventManager.editEventStart(event, newStart);
     }
 
-    public void createSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
-                                  Duration repetition, LocalDateTime absoluteEnd, String name) {
-        Series series = new Series(name);
-        while (startEnd.isBefore(absoluteEnd)) {
-            series.addEvent(this.createEvent(name, startStart, startEnd));
-            startStart.plus(repetition);
-            startEnd.plus(repetition);
-        }
-        this.series.add(series);
+    public void EditEventEnd(Event event, LocalDateTime newEnd){
+        this.eventManager.editEventEnd(event, newEnd);
     }
 
-    public void deleteSerialEvent(Series series) {
-        for (int i = 0; i < series.getEvents().size(); i++) {
-            for (int j = 0; j < this.store.size(); j++) {
-                if (series.getEvents().get(i).equals(this.store.get(j).getId())) {
-                    this.deleteEvent(this.store.get(j));
-                }
-            }
-        }
-    }
-
-    public void editName(Event event, String newName) {
-        event.editName(newName); //need a method for this event
-    }
-
-    public void editSerialEventName(Series series, String content) {
-        for (int i = 0; i < series.getEvents().size(); i++) {
-            for (int j = 0; j < this.store.size(); j++) {
-                if (this.store.get(j).getId() == series.getEvents().get(i)) {
-                    this.editName(this.store.get(j), content);
-                }
-            }
-        }
-    }
-
-    public void editEventMemoName(Event event, String content) {
-        this.memoManager.removeMemo(event.getMemo().toString(), event.getId());
-        event.editMemo(this.memoManager.addMemo(event.getId(), content));
-    }
-
-    public void editEventStart(Event event, LocalDateTime newStart) {
-        event.editStart(newStart); //need a method for this event
-    }
-
-    public void editEventEnd(Event event, LocalDateTime newEnd) {
-        event.editEnd(newEnd); //need a method for this event
-    }
-
-
-    public void addMemo(Event event, String content) {
-        event.addMemo(this.memoManager.addMemo(event.getId(), content));
-    }
-
-    public void editMemo(Event event, String content) {
-        this.memoManager.removeMemo(event.getMemo().toString(), event.getId());
-        event.addMemo(this.memoManager.addMemo(event.getId(), content));
-    }
-
-    public void deleteMemo(Event event) {
-        this.memoManager.removeMemo(event.getMemo().toString(), event.getId());
-        event.removeMemo(); //need to create this method
-    }
-
-
-    public void addAlert(Event event, String name, LocalDateTime when) {
-        if (when.isBefore(event.getStartDateTime())) {
-            this.alertManager.addAlert(name, when);
-        }
-    }
-
-    public void addSerialAlert(Event event, String name, Duration duration, LocalDateTime start, LocalDateTime end) {
-        ArrayList<Alert> alerts = this.alertManager.addSerialAlert(name, start, end, duration);
-        for (int i = 0; i < alerts.size(); i++) {
-            event.addAlert(alerts.get(i));
-        }
-    }
-
-    public void editAlert(Alert alert, String name) {
-        alert.changeName(name);
-    }
-
-    public void editAlert(Alert alert, LocalDateTime time) {
-        alert.changeTime(time);
-    }
-
-    public void deleteAlert(Event event, Alert alert) {
-        event.removeAlert(alert);
-        this.alertManager.removeAlert(alert);
-    }
-
-    public void addSerialAlert(Event event, String name, LocalDateTime start, LocalDateTime finish, Duration repetition) {
-        ArrayList<Alert> alerts = this.alertManager.addSerialAlert(name, start, finish, repetition);
-        for (int i = 0; i < alerts.size(); i++) {
-            event.addAlert(alerts.get(i));
-        }
-    }
-
-    public void deleteSerialAlert(Event event, Alert alert) {
-        ArrayList<Alert> alerts = this.alertManager.removeSerialAlert(alert);
-        for (int i = 0; i < alerts.size(); i++) {
-            event.removeAlert(alerts.get(i));
-        }
-    }
-
-    public void editSerialAlert(Event event, Alert alert, String name) {
-        this.alertManager.edit(alert, name);
-    }
-
-    public void editSerialAlert(Event event, LocalDateTime start, LocalDateTime end, Alert alert, Duration repetition) {
-        this.addSerialAlert(event, alert.getName() , start, end , repetition);
-        this.deleteSerialAlert(event, alert);
-    }
-
-    public void addTag(Event event, String content) {
-        event.addTag(content);
+    public void addTag(Event event, String content){
+        this.eventManager.addTag(event, content);
     }
 
     public void removeTag(Event event, String content) {
-        event.removeTag(content);
+        this.eventManager.removeTag(event, content);
     }
 
-    public void editTag(Event event, String oldtag, String newtag) {
-        event.removeTag(oldtag);
-        event.addTag(newtag);
+    public void editTag(Event event, String oldTag, String newTag) {
+        this.eventManager.editTag(event, oldTag, newTag);
     }
+
+    //Alerts
+    public void addAlert(Event event, String name, LocalDateTime when){
+        this.eventManager.addAlert(event, this.alertManager.addAlert(name, when));
+    }
+
+    public void removeAlert(Event event, Alert alert) {
+        this.eventManager.deleteAlert(event, alert);
+        this.alertManager.removeAlert(alert);
+    }
+
+    public void editAlertName(Alert alert, String name){
+        this.alertManager.edit(alert, name);
+    }
+
+    public void editAlertTime( Alert alert, LocalDateTime when){
+        this.alertManager.editAlertTime(alert, when);
+    }
+
+    public ArrayList<Alert> getRemainingAlerts(int id){
+        return this.alertManager.remainingAlert(id);
+    }
+
+    //Memo
+    public void addMemo(Event event, String content){
+        this.eventManager.addMemo(event, this.memoManager.addMemo(this.eventManager.getEvent(event), content));
+    }
+
+    public void removeEventMemo(Event event){
+        this.memoManager.removeEventMemo(this.eventManager.getMemo(event), this.eventManager.getEvent(event));
+    }
+
+    public void editEventMemo(Event event, Memo memo, String content){
+        this.eventManager.addMemo(event, this.memoManager.addMemo(this.eventManager.getEvent(event), content));
+    }
+
+    public void deleteMemo(Memo memo){
+        for (int i = 0; i < this.memoManager.memoEvent(memo).size(); i++) {
+            this.eventManager.deleteMemo(this.eventManager.getEvent(this.memoManager.memoEvent(memo).get(i)));
+        }
+        this.memoManager.deleteMemo(memo);
+    }
+
+    public void editMemo(Memo memo, String content){
+        this.memoManager.editName(memo, content);
+    }
+
+    //Serial Events
+    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
+                               Duration repetition, LocalDateTime absoluteEnd, String name){
+        this.seriesManager.createSerialEvent(startStart, startEnd, repetition, absoluteEnd, name);
+    }
+
+    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
+                               Duration repetition, LocalDateTime absoluteEnd, String name, String content){
+        Series series = this.seriesManager.createSerialEvent(startStart, startEnd, repetition, absoluteEnd, name);
+        for (int i = 0; i < series.getEvents().size(); i++) {
+            this.addMemo(series.getEvents().get(i), content);
+        }
+    }
+
+    public void deleteSerialEvent(Event event){
+        this.seriesManager.deleteSerialEvent(this.seriesManager.seriesGetter(event));
+    }
+
+    public void editNameSerialEvent(Event event, String name){
+        this.seriesManager.editName(this.seriesManager.seriesGetter(event), name);
+    }
+
+    //Serial Alerts
+
+    
 }
