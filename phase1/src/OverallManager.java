@@ -17,6 +17,10 @@ public class OverallManager{
     }
 
     //Event methods
+
+    public Event getEvent(int id){
+        return this.eventManager.getEvent(id);
+    }
     public void createEvent(String name, LocalDateTime start, LocalDateTime end) {
         this.eventManager.createEvent(name, start, end);
     }
