@@ -5,6 +5,7 @@
  * https://howtodoinjava.com/library/json-simple-read-write-json-examples/
  */
 
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class UserManager {
 
     private JSONArray userJsonArray;
+    private static String FILE_PATH = "phase1/src/users.json";
 
     /**
      * @author Alex
@@ -29,7 +31,7 @@ public class UserManager {
      */
     public UserManager()
     {
-        try(FileReader reader = new FileReader("phase1/src/users.json"))
+        try(FileReader reader = new FileReader(FILE_PATH))
         {
 
             JSONParser jsonParser = new JSONParser();
@@ -140,13 +142,11 @@ public class UserManager {
      * @param userID ID of user to remove
      */
     public void deleteUserByName(int userID) {
-        System.out.println("deletion of: " + userID);
         Object temp = new Object();
         for(Object u: userJsonArray) {
             JSONObject uo = (JSONObject) u;
             if(Integer.parseInt(uo.get("id").toString()) == (userID)){
-                System.out.println("found uid");
-                temp = (Object) u;
+                temp = u;
                 break;
             }
         }
@@ -159,7 +159,7 @@ public class UserManager {
      * Writes userJsonArray to users.json
      */
     public void writeUserJsonFile() {
-        try(FileWriter file = new FileWriter("src/users.json")) {
+        try(FileWriter file = new FileWriter(FILE_PATH)) {
             file.write(userJsonArray.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
