@@ -100,7 +100,7 @@ public class CalendarManager {
         int month = dateInfo[1];
         int year = dateInfo[2];
         LocalDate searchDate = LocalDate.of(year, month, dayOfMonth);
-        return DataManager.getEventsByDate(searchDate);
+        return CalendarDataFacade.getEventsByDate(searchDate);
         // Use the below instead for purely testing
         // return new ArrayList<Event>(0);
     }
@@ -112,7 +112,7 @@ public class CalendarManager {
      */
     public ArrayList<Alert> getAlerts() {
         /* TODO: theoretically DataManager should have a getAlerts() method and this will just call that and return */
-        ArrayList<Alert> alerts = DataManager.getAlerts();
+        ArrayList<Alert> alerts = CalendarDataFacade.getAlerts();
         return alerts;
 
         // Use the below instead for purely testing
