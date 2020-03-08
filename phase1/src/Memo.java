@@ -30,15 +30,23 @@ public class Memo {
     /**
      * Add the id of an event to this memo's list of associated events
      * @param id the id of the event being added
-     * @return -1 if the event id is already in its events list, 1 if successfully added
      */
-    public int addEvent(Integer id) {
+    public void addEvent(Integer id) {
         if (events.contains(id)) {
-            return -1; //FAILURE
         } else {
             events.add(id);
-            return 1; //SUCCESS
         }
     }
 
+    //Beginning of Arsham's methods
+
+    //remove the event with a certain ID from the list of events for a memo
+    public void removeEvent(int id){
+        this.events.remove(id);
+    }
+
+    //change the name of a memo
+    public void changeName(String content){
+        this.contents = content;
+    }
 }

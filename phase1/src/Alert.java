@@ -17,6 +17,7 @@ public class Alert {
         dateTime = when;
     }
 
+
     public String toString() {
         return String.format("%s at %s",  name, dateTime.toString());
     }
@@ -37,4 +38,20 @@ public class Alert {
         return dateTime;
     }
 
+    //Arsham's code:
+
+    //changeName changes the name/message of the alert
+    public void changeName(String content){
+        this.name  = content;
+    }
+
+    //changeTime changes the time of the alert
+    public void changeTime(LocalDateTime time){
+        this.dateTime = time;
+    }
+
+    //getName returns the name/message of the alert
+    public String getName(){
+        return this.name;
+    }
 }

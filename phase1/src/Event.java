@@ -88,8 +88,59 @@ public class Event {
         return endDateTime;
     }
 
+<<<<<<< HEAD
     public Duration getDuration() {
         return duration;
     }
 
+=======
+    //Arsham's code
+    //Romove the tag with content
+    public void removeTag(String content){
+        for (int i = 0; i < tags.size(); i++) {
+            if (tags.get(i).equals(content)){
+                tags.remove(i);
+            }
+        }
+    }
+
+    //returns memo from this event
+    public Memo getMemo(){
+        return this.memo;
+    }
+
+    //edit the name for event
+    public void editName(String name){
+        this.name = name;
+    }
+
+    //Change the memo for this event
+    public void editMemo(Memo memo){
+        this.memo = memo;
+    }
+
+    //change the start of the event
+    public void editStart(LocalDateTime start){
+        if (start.isBefore(this.endDateTime)){
+            this.startDateTime = start;
+        }
+    }
+
+    //change the end of this event
+    public void editEnd(LocalDateTime end){
+        if (end.isAfter(this.startDateTime)){
+            this.endDateTime = end;
+        }
+    }
+
+    //remove the memo
+    public void removeMemo(){
+        this.memo = null;
+    }
+
+    //remove the alert
+    public void removeAlert(Alert alert){
+        this.alerts.remove(alert);
+    }
+>>>>>>> 1a5fb78506d2e0ecf247b02587db9592dbbf1810
 }
