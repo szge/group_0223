@@ -13,8 +13,8 @@ public class Event {
     private int id;
     private static int numEvents = 0;
 
-    private ArrayList<String> tags;
-    private ArrayList<Alert> alerts;
+    private ArrayList<String> tags = new ArrayList<>();
+    private ArrayList<Alert> alerts = new ArrayList<>();
 
     public Event(String name, LocalDateTime start, LocalDateTime end) {
         numEvents++;
@@ -22,7 +22,7 @@ public class Event {
         this.name = name;
         startDateTime = start;
         endDateTime = end;
-        this.duration = Duration.between(start, end);
+        duration = Duration.between(start, end);
     }
 
     public Event(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
@@ -32,7 +32,7 @@ public class Event {
         startDateTime = start;
         endDateTime = end;
         duration = Duration.between(start, end);
-        this.memo = memo;
+        addMemo(memo);
     }
 
     public void addTag(String tag) {
@@ -87,6 +87,11 @@ public class Event {
     public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
 
     //Arsham's code
     //Romove the tag with content
