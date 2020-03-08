@@ -18,9 +18,10 @@ public class EventManager {
         return event;
     }
 
-    public void createEvent(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
+    public Event createEvent(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
         Event event = new Event(name, start, end, memo);
         this.store.add(event);
+        return event;
     }
 
     public void deleteEvent(Event event) {

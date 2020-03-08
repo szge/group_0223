@@ -23,15 +23,20 @@ public class SeriesManager {
         this.store.add(series);
     }
 
+    public void createSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
+                                  Duration repetition, LocalDateTime absoluteEnd, String name, Memo memo) {
+        Series series = new Series(name);
+        while (startEnd.isBefore(absoluteEnd)) {
+            series.addEvent(this.eventManager.createEvent(name, startStart, startEnd, memo));
+            startStart.plus(repetition);
+            startEnd.plus(repetition);
+        }
+        this.store.add(series);
+    }
+
     public void deleteSerialEvent(Series series){
         for (int i = 0; i < series.getEvents().size(); i++) {
             this.eventManager.deleteEvent(this.eventManager.getEvent(series.getEvents().get(i)));
-        }
-    }
-
-    public void editSerialEventName(Series series, String name){
-        for (int i = 0; i < series.getEvents().size(); i++) {
-            this.eventManager.editName(this.eventManager.getEvent(series.getEvents().get(i)), name);
         }
     }
 
