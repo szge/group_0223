@@ -73,7 +73,7 @@ public class CalendarDataFacade {
     }
 
     public static void login(String username) throws FileNotFoundException {
-        String filename = "ProgramData.json";
+        String filename = "src/ProgramData.json";
         File file = new File(filename);
         JSONParser parser = new JSONParser();
         ArrayList<JSONArray> toBeLoaded = new ArrayList<JSONArray>();
@@ -82,10 +82,12 @@ public class CalendarDataFacade {
             Object obj = parser.parse(reader);
             JSONObject jsonObj = (JSONObject) obj;
             user = (JSONObject) jsonObj.get(username);
+            System.out.println(user);
             toBeLoaded.add((JSONArray) user.get("Memos"));
             toBeLoaded.add((JSONArray) user.get("Alerts"));
             toBeLoaded.add((JSONArray) user.get("Events"));
             toBeLoaded.add((JSONArray) user.get("Series"));
+            System.out.println(toBeLoaded.get(2));
         } catch(
                 ParseException | IOException e)
         {
@@ -216,7 +218,14 @@ public class CalendarDataFacade {
         return eventsToReturn;
     }
     public static void main(String[] args) throws FileNotFoundException {
+        System.out.println(events);
+        System.out.println(user);
         login("Danial");
+        LocalDateTime s = LocalDateTime.of(2020, 3,12,4,3);
+        LocalDateTime e = LocalDateTime.of(2020, 3,13,4,3);
+        Event ev = new Event("test", s, e);
+        events.add(ev);
+        saver.saveData(events, memos, alerts, series, user);
         for(Event event: events){
            System.out.println(event.getId());
            System.out.println(event.getName());
