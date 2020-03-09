@@ -29,7 +29,7 @@ public class AlertManager {
         return alerts;
     }
 
-    public void editAlert(Alert alert, String content){
+    public void editName(Alert alert, String content){
         //edits the name of an alert
         alert.changeName(content);
     }
