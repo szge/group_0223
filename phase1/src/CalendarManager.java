@@ -129,5 +129,9 @@ public class CalendarManager {
         ArrayList<Alert> alerts = CalendarDataFacade.getAlerts();
         return alerts;
     }
+
+    public void logout() {
+        CalendarDataFacade.logout();
+    }
 }
 

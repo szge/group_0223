@@ -26,6 +26,7 @@ public class UserInterface {
                 } else if (option1.equals("3")) {
                     deleteAccount();
                 } else if (option1.equals("4")) {
+                    calendarManager.logout();
                     login = true;
                     exit = true;
                 } else {
@@ -156,6 +157,7 @@ public class UserInterface {
     }
 
     private static void createEvents() {
+        System.out.println("Welcome to the Event creator. How would you like to create your events?\n(1) Single event\n(2) Recurring event");
     }
 
     private static void viewAlerts() {
