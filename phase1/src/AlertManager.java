@@ -1,3 +1,4 @@
+//author: Arsham
 import java.time.*;
 import java.util.ArrayList;
 
@@ -12,12 +13,14 @@ public class AlertManager {
     }
 
     public Alert addAlert(String name, LocalDateTime when){
+        //create and alert
         Alert newAlert = new Alert(name, when);
         this.store.add(newAlert);
         return newAlert;
     }
 
     public ArrayList<Alert> addSerialAlert(String name, LocalDateTime start, LocalDateTime finish, Duration repetition){
+        // create a serial set of alerts
         ArrayList<Alert> alerts = null;
         while(start.isBefore(finish)){
             alerts.add(this.addAlert(name, start));
@@ -28,13 +31,14 @@ public class AlertManager {
 
     public void removeAlert(Alert alert){
         this.store.remove(alert);
-    }
+    } //remove an alert
 
     public void editAlertTime(Alert alert, LocalDateTime when){
         alert.changeTime(when);
-    }
+    }// change alert time
 
     public ArrayList<Alert> removeSerialAlert(Alert alert){
+        //remove a series of alerts containing alert.
         ArrayList<Alert> alerts= null;
         for (int i = 0; i < this.serialAlerts.size() ; i++) {
             if (this.serialAlerts.get(i).contains(alert)){
@@ -49,6 +53,7 @@ public class AlertManager {
     }
 
     public ArrayList<Alert> seriesofAlerts(Alert alert){
+        //returns a series of alerts containing alert
         ArrayList<Alert> alerts= null;
         for (int i = 0; i < this.serialAlerts.size() ; i++) {
             if (this.serialAlerts.get(i).contains(alert)) {
@@ -60,7 +65,8 @@ public class AlertManager {
         return alerts;
     }
 
-    public void edit(Alert alert, String name){
+    public void editSeriesOfAlerts(Alert alert, String name){
+        //edit the name of an alert series
         ArrayList<Alert> alerts = this.seriesofAlerts(alert);
         for (int i = 0; i < alerts.size(); i++) {
             alerts.get(i).changeName(name);
@@ -68,6 +74,7 @@ public class AlertManager {
     }
 
     public ArrayList<Alert> remainingAlert(int id){
+        //return the alerts that haven't been passed
         Alert alerts = null;
         ArrayList<Alert> remaining = new ArrayList<Alert>();
         for (int i=0; i<this.store.size(); i++){
