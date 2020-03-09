@@ -29,6 +29,11 @@ public class AlertManager {
         return alerts;
     }
 
+    public void editAlert(Alert alert, String content){
+        //edits the name of an alert
+        alert.changeName(content);
+    }
+
     public void removeAlert(Alert alert){
         this.store.remove(alert);
     } //remove an alert

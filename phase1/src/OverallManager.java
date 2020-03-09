@@ -88,7 +88,7 @@ public class OverallManager{
 
     public void editAlertName(Alert alert, String name){
         //edits the name of an alert
-        this.alertManager.edit(alert, name);
+        this.alertManager.editName(alert, name);
     }
 
     public void editAlertTime( Alert alert, LocalDateTime when){
