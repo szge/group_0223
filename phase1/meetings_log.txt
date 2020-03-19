@@ -1,3 +1,33 @@
+Meeting 9 - Thursday, 12 March @ Bahen
+- Arsham: we don't want to store ID of events inside a series; we'll store a reference to the event itself
+- Also, we'll have have an FrequentAlert class that Emily will implement
+- Passing an event to another user: Alex, Jonathan, Danial
+- Motivational Quotes: Jonathan will implement in interface
+- Alex will add new functionality for Phase 2 to calendarManager
+- Alex will implement multiple calendars per user
+- Jonathan will look into GUI
+- Multiple users will have same events in the caendar: Alex
+- Ability for user to delete an event: Arsham
+- Jonathan and Danial will look into GUI/Android
+- Postpone/reschedule events: Arsham
+
+
+Meeting 8 - Tuesday, 10 March @ Lab
+- Met and discussed phase 2 components to implement
+- Phase 1: needs to be more polished, Alex Danial Arsham will meet up Thursday to clean up code
+
+Meeting 7 - Sunday, 08 March @ Bahen
+- Alex, Arsham, Emily met at bahen to fix bugs
+- Arsham had some parts left to complete
+- Emily's components were done
+- Alex's components were done (barring parts that relied on Arsham/Danial's work)
+- Jonathan's UI was functional but not fully working with all parts of program
+- Got UI to work with logging in a user, could not add events yet in UI
+
+Meeting 6 - Wednesday, 04 March @ Sid Smith (after class)
+- Went over new parts of design needed to implement before phase 1 due date
+- Agreed to move our extension deadline to Sunday night
+
 Meeting 5 - Tuesday, 03 March @ Lab
 - Talked with Brenna TA, she gave us advice on how to simplify design
 - Some overhauls needed:
