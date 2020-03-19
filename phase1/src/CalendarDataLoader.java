@@ -137,4 +137,18 @@ public class CalendarDataLoader {
             alerts.add(new Alert(name, alertTime));
         }
     }
+
+    private static void loadAlertSeries(JSONArray jsonalertSeries, ArrayList<AlertSeries> alertSeries) {
+        for (Object jsonAS: jsonalertSeries) {
+            JSONObject jsonAlertSers = (JSONObject) jsonAS;
+            String name = (String) jsonAlertSers.get("name");
+            for(Object id: (JSONArray)jsonAlertSers.get("alert ids")){
+                for(Alert alert: CalendarDataFacade.getAlerts()){
+                    if(((Long)id).intValue() == alert.getId()){
+                        createdAlertSeries.addAlert(alert);
+                    }
+                }
+            }
+        }
+    }
 }
