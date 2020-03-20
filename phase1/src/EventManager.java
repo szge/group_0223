@@ -6,8 +6,11 @@ public class EventManager {
 
     private ArrayList<Event> store;
 
-    public EventManager() {
-        this.store = CalendarDataFacade.getEvents();
+    public EventManager() { this.store = new ArrayList<Event>(); }
+
+    //0)Loading events
+    public void loadEvents(ArrayList<Event> events){
+        this.store = events;
     }
 
     //1)Basics for events
