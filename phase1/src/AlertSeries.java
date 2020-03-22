@@ -1,3 +1,4 @@
+import java.time.*;
 import java.util.ArrayList;
 
 public class AlertSeries {
@@ -38,4 +39,45 @@ public class AlertSeries {
             alerts.add(newAlert.getId());
         }
     }
+
+    // remove an alert
+    public void removeAlert(Alert alert){
+        alerts.remove(alert);
+    }
+
+    public void editAlertTime(int id, LocalDateTime when) {
+        for (int i=0; i<alerts.size(); i++) {
+            if (alerts.get(i).getId() == id) {
+                alerts.get(i).changeTime(when);
+                }
+            }
+        }
+
+    public ArrayList<Alert> remainingAlert(){
+        //return the alerts that haven't been passed
+        ArrayList<Alert> remaining = new ArrayList<Alert>();
+        for (int i=0; i<alerts.size(); i++){
+            if (alerts.get(i).getLocalDateTime().isBefore(LocalDate.now())){
+                remaining.add(this.alerts.get(i));
+            }
+        }
+        return remaining;
+    }
+
+    public void editName(int id, String name) {
+        for (int i = 0; i < alerts.size(); i++) {
+            if (alerts.get(i).getId() == id) {
+                alerts.get(i).changeName(name);
+            }
+        }
+    }
+
+    public void removeAlert(int id){
+        for (int i = 0; i < alerts.size(); i++) {
+            if (alerts.get(i).getId() == id) {
+                alerts.remove(alerts.get(i));
+            }
+        }
+    }
+
 }
