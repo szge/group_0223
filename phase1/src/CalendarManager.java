@@ -1,6 +1,8 @@
+import org.json.simple.parser.ParseException;
 import sun.util.resources.CalendarData;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -8,11 +10,11 @@ public class CalendarManager {
 
     private UserManager userMg;
     private OverallManager overMg;
+    private CalendarDataFacade dataMg;
 
-    public CalendarManager()
-    {
+    public CalendarManager() throws IOException, ParseException {
         userMg = new UserManager();
-        overMg = new OverallManager();
+        dataMg = new CalendarDataFacade();
 
     }
 
@@ -32,7 +34,14 @@ public class CalendarManager {
         if(code > 0){
             try
             {
-                CalendarDataFacade.login(user);
+                dataMg.login(user);
+                ArrayList<ArrayList> overAllData =  new ArrayList<ArrayList>();
+                overAllData.add(dataMg.getEvents());
+                overAllData.add(dataMg.getMemos());
+                overAllData.add(dataMg.getAlerts());
+                overAllData.add(dataMg.getSeries());
+                overAllData.add(dataMg.getAlertSeries());
+                overMg = new OverallManager(overAllData);
             }
             catch (FileNotFoundException e)
             {

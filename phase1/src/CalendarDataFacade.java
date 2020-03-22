@@ -1,10 +1,7 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileReader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -12,14 +9,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 public class CalendarDataFacade {
-    private static ArrayList<Event> events = new ArrayList<Event>();
-    private static ArrayList<Memo> memos = new ArrayList<Memo>();
-    private static ArrayList<Alert> alerts = new ArrayList<Alert>();
-    private static ArrayList<Series> series = new ArrayList<Series>();
-    private static CalendarDataLoader loader = new CalendarDataLoader();
-    private static CalendarDataSaver saver = new CalendarDataSaver();
-    private static JSONObject jfile;
-    public static String usern;
+    private ArrayList<Event> events = new ArrayList<Event>();
+    private ArrayList<Memo> memos = new ArrayList<Memo>();
+    private ArrayList<Alert> alerts = new ArrayList<Alert>();
+    private ArrayList<Series> series = new ArrayList<Series>();
+    private ArrayList<AlertSeries> alertSeries = new ArrayList<AlertSeries>();
+    private CalendarDataLoader loader = new CalendarDataLoader();
+    private CalendarDataSaver saver = new CalendarDataSaver();
+    private JSONObject jfile;
+    public String usern;
+
+    public CalendarDataFacade() throws IOException, ParseException {
+        String filename = "src/ProgramData.json";
+        File file = new File(filename);
+        JSONParser parser = new JSONParser();
+        FileReader reader = new FileReader(file.getAbsolutePath());
+        Object obj = parser.parse(reader);
+        jfile = (JSONObject) obj;
+    }
 
     /**
      * @author Danial
@@ -28,7 +35,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getEvents() {
+    public ArrayList<Event> getEvents() {
         return events;
     }
     /**
@@ -38,7 +45,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Memo>
      */
-    public static ArrayList<Memo> getMemos() {
+    public ArrayList<Memo> getMemos() {
         return memos;
     }
     /**
@@ -48,7 +55,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Alert>
      */
-    public static ArrayList<Alert> getAlerts() {
+    public ArrayList<Alert> getAlerts() {
         return alerts;
     }
     /**
@@ -58,63 +65,115 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Series>
      */
-    public static ArrayList<Series> getSeries() {
+    public ArrayList<Series> getSeries() {
         return series;
     }
-
-    public static void addMemo(Memo m){
-        memos.add(m);
+    /**
+     * @author Danial
+     *
+     * Returns all alertseries
+     * @return
+     * ArrayList<AlertSeries>
+     */
+    public ArrayList<AlertSeries> getAlertSeries() {
+        return alertSeries;
     }
 
-    private static  LocalDate timetoDate(LocalDateTime time){
+    /**
+     * @author Danial
+     *
+     * Converts a LocalDateTime object to its corresponding
+     * LocalDate object
+     * @param time LocalDateTime object to be converted
+     * @return
+     * LocalDate
+     */
+    private  LocalDate timetoDate(LocalDateTime time){
         int year = time.getYear();
         int month = time.getMonthValue();
         int day = time.getDayOfMonth();
         return LocalDate.of(year, month, day);
     }
+    /**
+     * @author Danial
+     *
+     * Logs in the user with the given user name by
+     * loading all the user's events, memos, alerts, series,
+     * and alert series from the JSON file
+     * @param username username of the user
+     */
+    public void login(String username) throws FileNotFoundException {
 
-    public static void login(String username) throws FileNotFoundException {
-        String filename = "src/ProgramData.json";
-        File file = new File(filename);
-        JSONParser parser = new JSONParser();
         ArrayList<JSONArray> toBeLoaded = new ArrayList<JSONArray>();
-        try{
-            FileReader reader = new FileReader(file.getAbsolutePath());
-            Object obj = parser.parse(reader);
-            jfile = (JSONObject) obj;
-            JSONObject user = (JSONObject) jfile.get(username);
-            System.out.println(user);
-            toBeLoaded.add((JSONArray) user.get("Memos"));
-            toBeLoaded.add((JSONArray) user.get("Alerts"));
-            toBeLoaded.add((JSONArray) user.get("Events"));
-            toBeLoaded.add((JSONArray) user.get("Series"));
-            System.out.println(toBeLoaded.get(2));
-        } catch(
-                ParseException | IOException e)
-        {
-            e.printStackTrace();
-        }
+        JSONObject user = (JSONObject) jfile.get(username);
+        toBeLoaded.add((JSONArray) user.get("Memos"));
+        toBeLoaded.add((JSONArray) user.get("Alerts"));
+        toBeLoaded.add((JSONArray) user.get("Events"));
+        toBeLoaded.add((JSONArray) user.get("Series"));
+        toBeLoaded.add((JSONArray) user.get("Alert Series"));
         usern = username;
         ArrayList<ArrayList> attributes = new ArrayList<ArrayList>();
         attributes.add(memos);
         attributes.add(alerts);
         attributes.add(events);
         attributes.add(series);
+        attributes.add(alertSeries);
         loader.loadData(toBeLoaded, attributes);
     }
-    public static void logout(){
-        saver.saveData(events, memos, alerts, series, jfile);
+    /**
+     * @author Danial
+     *
+     * Creates a new user object in the JSON file with the
+     * username as the key word
+     * @param username username of the new user
+     */
+    public void addNewUser(String username){
+        saver.saveData(new ArrayList<Event>(), new ArrayList<Memo>(), new ArrayList<Alert>(), new ArrayList<Series>(),
+                new ArrayList<AlertSeries>(), jfile, username);
+    }
+    /**
+     * @author Danial
+     *
+     * Saves everything to the JSON file and resets everything
+     */
+    public void logout(){
+        saver.saveData(events, memos, alerts, series, alertSeries, jfile, usern);
         events = new ArrayList<Event>();
         memos = new ArrayList<Memo>();
         alerts = new ArrayList<Alert>();
         series = new ArrayList<Series>();
+        alertSeries = new ArrayList<AlertSeries>();
         jfile = null;
         usern = null;
 
     }
+    /**
+     * @author Danial
+     *
+     * Adds an Even to a different user, other than the one that is logged in
+     * @param event The event to be added
+     * @param username The username of the user we want to add the event to
+     */
+    public void addEventToUser(Event event, String username) throws IOException {
+        ArrayList<Event> toBeLoaded = new ArrayList<Event>();
+        JSONObject user = (JSONObject) jfile.get(username);
+        JSONArray events = (JSONArray) user.get("Events");
+        loader.loadEvents(events, toBeLoaded);
+        Event newEvent = new Event(event.getName(), event.getStartDateTime(), event.getEndDateTime());
+        for(String t: event.getTags()) {
+            newEvent.addTag(t);
+        }
+        toBeLoaded.add(newEvent);
+        Event.bringDownNum();
+        user.put("Events",saver.saveEvents(toBeLoaded));
+        jfile.put(username, user);
+        try(FileWriter file = new FileWriter("src/ProgramData.json")) {
+            file.write(jfile.toJSONString());
+        }
+    }
 
 
-    public static ArrayList<Event> getEventsByDate(LocalDate date){
+    public ArrayList<Event> getEventsByDate(LocalDate date){
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
             if(date.equals(timetoDate(event.getStartDateTime()))){
@@ -131,7 +190,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getPastEvents(){
+    public ArrayList<Event> getPastEvents(){
         LocalDate now = LocalDate.now();
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
@@ -150,7 +209,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getFutureEvents(){
+    public ArrayList<Event> getFutureEvents(){
         LocalDate now = LocalDate.now();
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
@@ -171,7 +230,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getCurrentEvents(){
+    public ArrayList<Event> getCurrentEvents(){
         LocalDate now = LocalDate.now();
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
@@ -192,7 +251,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getEventsByMemo(Memo memo){
+    public ArrayList<Event> getEventsByMemo(Memo memo){
         ArrayList<Integer> eventids = memo.getEvents();
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
@@ -211,7 +270,7 @@ public class CalendarDataFacade {
      * @return
      * ArrayList<Event>
      */
-    public static ArrayList<Event> getEventsByTag(String tag){
+    public ArrayList<Event> getEventsByTag(String tag){
         ArrayList<Event> eventsToReturn = new ArrayList<Event>();
         for(Event event: events){
             if(event.getTags().contains(tag)) {
@@ -220,4 +279,14 @@ public class CalendarDataFacade {
         }
         return eventsToReturn;
     }
+
+//    public static void main(String[] args) throws IOException, ParseException {
+//      CalendarDataFacade cal = new CalendarDataFacade();
+//      cal.login("Danial");
+//      cal.events.add(new Event("TEST", LocalDateTime.now(), LocalDateTime.now()));
+//        cal.addNewUser("That guy");
+//        cal.addEventToUser(new Event("TEST", LocalDateTime.now(), LocalDateTime.now()), "That guy");
+//      cal.logout();
+//
+//    }
 }

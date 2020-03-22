@@ -1,1 +1,7 @@
-{"Danial":{"Series":[],"Events":[],"Memos":[],"Alerts":[]}}
+{"That guy":{"Series":[],"Events":[{"end time":{"min":20,"month":3,"hour":23,"year":2020,"day":21},"memo id":null,
+  "name":"TEST","start time":{"min":20,"month":3,"hour":23,"year":2020,"day":21},"alert ids":[],"id":4,"tags":[]}],
+  "Memos":[],"Alerts":[],"Alert Series":[]},
+  "Danial":{"Series":[],"Events":[{"end time":{"min":11,"month":3,"hour":22,"year":2020,"day":21},
+    "memo id":null,"name":"TEST","start time":{"min":11,"month":3,"hour":22,"year":2020,"day":21},
+    "alert ids":[],"id":1,"tags":[]},{"end time":{"min":20,"month":3,"hour":23,"year":2020,"day":21},
+    "memo id":null,"name":"TEST","start time":{"min":20,"month":3,"hour":23,"year":2020,"day":21},"alert ids":[],"id":2,"tags":[]}],"Memos":[],"Alerts":[],"Alert Series":[]}}

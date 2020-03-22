@@ -21,19 +21,22 @@ public class CalendarDataSaver {
      * ArrayList<Event>
      */
     public void saveData (ArrayList<Event> events, ArrayList<Memo> memos, ArrayList<Alert> alerts,
-                             ArrayList<Series> series, JSONObject obj){
+                             ArrayList<Series> series, ArrayList<AlertSeries> alertSeries, JSONObject obj,
+                          String username){
         JSONObject user = new JSONObject();
         user.put("Events", saveEvents(events));
         user.put("Memos", saveMemos(memos));
         user.put("Alerts", saveAlerts(alerts));
         user.put("Series", saveSeries(series));
-        obj.put(CalendarDataFacade.usern, user);
+        user.put("Alert Series", saveAlertSeries(alertSeries));
+        obj.put(username, user);
         try(FileWriter file = new FileWriter("src/ProgramData.json")) {
             file.write(obj.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * @author Danial
      *
@@ -53,7 +56,7 @@ public class CalendarDataSaver {
         return obj;
 
     }
-    private JSONArray saveEvents(ArrayList<Event> events){
+    public JSONArray saveEvents(ArrayList<Event> events){
         JSONArray array = new JSONArray();
         for(Event event:events){
             JSONObject obj = new JSONObject();
@@ -85,6 +88,18 @@ public class CalendarDataSaver {
         for(Memo memo:memos){
             JSONObject obj = new JSONObject();
             obj.put("content", memo.toString());
+            array.add(obj);
+        }
+        return array;
+    }
+    private JSONArray saveAlertSeries(ArrayList<AlertSeries> AlertSe){
+        JSONArray array = new JSONArray();
+        for(AlertSeries alerts: AlertSe){
+            JSONObject obj = new JSONObject();
+            JSONArray alertids = new JSONArray();
+            alertids.addAll(alerts.getAlerts());
+            obj.put("name", alerts.getName());
+            obj.put("Alert ids", alertids);
             array.add(obj);
         }
         return array;
