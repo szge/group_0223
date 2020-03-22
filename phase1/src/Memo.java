@@ -27,6 +27,10 @@ public class Memo {
         return contents;
     }
 
+    public static void bringDownNum() {
+        this.numMemos --;
+    }
+
     /**
      * Add the id of an event to this memo's list of associated events
      * @param id the id of the event being added

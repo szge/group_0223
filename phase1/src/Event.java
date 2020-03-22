@@ -59,6 +59,10 @@ public class Event {
         }
     }
 
+    public static void bringDownNum() {
+        this.numEvents --;
+    }
+
     public ArrayList<String> getTags() {
         return tags;
     }

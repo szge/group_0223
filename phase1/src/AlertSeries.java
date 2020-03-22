@@ -5,11 +5,11 @@ public class AlertSeries {
     private ArrayList<Integer> alerts = new ArrayList<>();
 
     private int id;
-    private static int numSeries = 0;
+    private static int numAlertSeries = 0;
 
     public AlertSeries(String name) {
-        numSeries ++;
-        id = numSeries;
+        numAlertSeries ++;
+        id = numAlertSeries;
         this.name = name;
     }
 
@@ -23,6 +23,10 @@ public class AlertSeries {
 
     public ArrayList<Integer> getAlerts() {
         return alerts;
+    }
+
+    public static void bringDownNum() {
+        this.numAlertSeries --;
     }
 
     /**

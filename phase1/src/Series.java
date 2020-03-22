@@ -25,6 +25,10 @@ public class Series {
         return this.events;
     }
 
+    public static void bringDownNum() {
+        this.numSeries --;
+    }
+
     /**
      * Add the id of an event to this memo's list of associated events
      * @param newEvent the event whose id is being added

@@ -25,6 +25,10 @@ public class Alert {
         return id;
     }
 
+    public static void bringDownNum() {
+        this.numAlerts --;
+    }
+
     public LocalDate getLocalDate() {
         return this.dateTime.toLocalDate();
     }
