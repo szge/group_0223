@@ -4,6 +4,7 @@ import sun.util.resources.CalendarData;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CalendarManager {
@@ -12,10 +13,19 @@ public class CalendarManager {
     private OverallManager overMg;
     private CalendarDataFacade dataMg;
 
-    public CalendarManager() throws IOException, ParseException {
+    //Each CalendarManager has a calendarNum to identify which of the user's calendars this is
+    private int userCalendarNum;
+
+    public CalendarManager() {
         userMg = new UserManager();
         dataMg = new CalendarDataFacade();
+        userCalendarNum = 1;
+    }
 
+    public CalendarManager(int uCalendarNum) {
+        userMg = new UserManager();
+        dataMg = new CalendarDataFacade();
+        userCalendarNum = uCalendarNum;
     }
 
     /**
@@ -34,14 +44,14 @@ public class CalendarManager {
         if(code > 0){
             try
             {
-                dataMg.login(user);
-                ArrayList<ArrayList> overAllData =  new ArrayList<ArrayList>();
-                overAllData.add(dataMg.getEvents());
-                overAllData.add(dataMg.getMemos());
-                overAllData.add(dataMg.getAlerts());
-                overAllData.add(dataMg.getSeries());
-                overAllData.add(dataMg.getAlertSeries());
-                overMg = new OverallManager(overAllData);
+                dataMg.login(user + Integer.toString(userCalendarNum));
+                ArrayList<ArrayList> overallData =  new ArrayList<ArrayList>();
+                overallData.add(dataMg.getEvents());
+                overallData.add(dataMg.getMemos());
+                overallData.add(dataMg.getAlerts());
+                overallData.add(dataMg.getSeries());
+                overallData.add(dataMg.getAlertSeries());
+                overMg = new OverallManager(overallData);
             }
             catch (FileNotFoundException e)
             {
@@ -49,6 +59,28 @@ public class CalendarManager {
             }
         }
         return code;
+    }
+
+
+    /**
+     * Sends an event from this user to another user
+     * @param eventID
+     * @param username
+     */
+    public void sendEventToOtherUser(int eventID, String username, int uCalendarNum){
+        Event e = overMg.getEvent(eventID);
+        CalendarManager cmg = new CalendarManager(uCalendarNum);
+        cmg.createEvent(e.getName(), e.getStartDateTime(), e.getEndDateTime());
+    }
+
+    /**
+     *
+     * @param name the name of this event
+     * @param start the start time of this event
+     * @param end the end time of this event
+     */
+    public void createEvent(String name, LocalDateTime start, LocalDateTime end) {
+        overMg.createEvent(name, start, end);
     }
 
     /**
@@ -78,7 +110,7 @@ public class CalendarManager {
      * @return an array of all events (from DataManager)
      */
     public ArrayList<Event> getEvents() {
-        return CalendarDataFacade.getEvents();
+        return dataMg.getEvents();
     }
 
     /**
@@ -125,7 +157,7 @@ public class CalendarManager {
         int month = dateInfo[1];
         int year = dateInfo[2];
         LocalDate searchDate = LocalDate.of(year, month, dayOfMonth);
-        return CalendarDataFacade.getEventsByDate(searchDate);
+        return dataMg.getEventsByDate(searchDate);
     }
 
 
@@ -135,12 +167,12 @@ public class CalendarManager {
      */
     public ArrayList<Alert> getAlerts() {
         /* TODO: theoretically DataManager should have a getAlerts() method and this will just call that and return */
-        ArrayList<Alert> alerts = CalendarDataFacade.getAlerts();
+        ArrayList<Alert> alerts = dataMg.getAlerts();
         return alerts;
     }
 
     public void logout() {
-        CalendarDataFacade.logout();
+        dataMg.logout();
     }
 }
 
