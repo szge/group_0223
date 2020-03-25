@@ -1,3 +1,7 @@
+Meeting 10 - Wed, 25 March @ Facebook Call
+- Discussed timeline until project submission
+- Need to finish, debug and get UML doc together
+
 Meeting 9 - Thursday, 12 March @ Bahen
 - Arsham: we don't want to store ID of events inside a series; we'll store a reference to the event itself
 - Also, we'll have have an FrequentAlert class that Emily will implement
