@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.sun.xml.internal.fastinfoset.util.PrefixArray;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
@@ -19,13 +20,24 @@ public class CalendarDataFacade {
     private JSONObject jfile;
     public String usern;
 
-    public CalendarDataFacade() throws IOException, ParseException {
+    public CalendarDataFacade() {
         String filename = "src/ProgramData.json";
         File file = new File(filename);
         JSONParser parser = new JSONParser();
-        FileReader reader = new FileReader(file.getAbsolutePath());
-        Object obj = parser.parse(reader);
-        jfile = (JSONObject) obj;
+
+        //Note added by Alex: 25/03
+        //Handling exceptions here since they weren't handled before
+        // They need to be handled at this level or else I'll need to handle them at a higher level
+        try {
+            FileReader reader = new FileReader(file.getAbsolutePath());
+            Object obj = parser.parse(reader);
+            jfile = (JSONObject) obj;
+        } catch (IOException e) {
+            System.out.println("IOException thrown.");
+        } catch (ParseException e) {
+            System.out.println("ParseException thrown.");
+        }
+
     }
 
     /**
