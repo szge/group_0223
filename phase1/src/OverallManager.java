@@ -10,14 +10,21 @@ public class OverallManager{
     private SeriesManager seriesManager;
     private EventManager eventManager;
 
-    public OverallManager() {
-        this.eventManager = new EventManager();
-        this.seriesManager = new SeriesManager(this.eventManager);
-        this.memoManager = new MemoManager();
-        this.alertManager = new AlertManager();
+    public OverallManager(ArrayList data) {
+        this.eventManager = new EventManager(data.get(1));
+        this.seriesManager = new SeriesManager(data.get(4));
+        this.memoManager = new MemoManager(data.get(2));
+        this.alertManager = new AlertManager(data.get(3), data.get(5));
     }
 
     //Event methods
+    public void postponeIndef(int id){
+        this.eventManager.postponeIndef(int id);
+    }
+
+    public Event duplicateEvent(int id){
+        return this.eventManager.duplicateEvent(id);
+    }
 
     public Event getEvent(int id){
         //returns the event by its id

@@ -20,18 +20,18 @@ public class Event {
         numEvents++;
         id = numEvents;
         this.name = name;
-        startDateTime = start;
-        endDateTime = end;
-        duration = Duration.between(start, end);
+        this.startDateTime = start;
+        this.endDateTime = end;
+        this.duration = Duration.between(start, end);
     }
 
     public Event(String name, LocalDateTime start, LocalDateTime end, Memo memo) {
         numEvents++;
         id = numEvents;
         this.name = name;
-        startDateTime = start;
-        endDateTime = end;
-        duration = Duration.between(start, end);
+        this.startDateTime = start;
+        this.endDateTime = end;
+        this.duration = Duration.between(start, end);
         addMemo(memo);
     }
 
@@ -144,5 +144,10 @@ public class Event {
     // remove alert from this Events ArrayList of Alerts
     public void removeAlert(Alert alert){
         this.alerts.remove(alert);
+    }
+
+    public void postpone(){
+        this.startDateTime = null;
+        this.endDateTime = null;
     }
 }

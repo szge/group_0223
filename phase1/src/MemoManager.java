@@ -6,7 +6,7 @@ public class MemoManager {
 
     private HashMap<String, Memo> store; //holds a list of the Memos
 
-    public MemoManager(){
+    public MemoManager(ArrayList<>){
         this.store = new HashMap<String, Memo>();
     }
 

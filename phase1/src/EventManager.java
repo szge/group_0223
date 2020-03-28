@@ -6,12 +6,17 @@ public class EventManager {
 
     private ArrayList<Event> store;
 
-    public EventManager() { this.store = new ArrayList<Event>(); }
+    public EventManager(ArrayList<Event> store) { this.store = store; }
 
-    //0)Loading events
-    public void loadEvents(ArrayList<Event> events){
-        this.store = events;
+    public void postponeIndef(int id){
+        this.getEvent(id).postpone();
     }
+
+    public Event duplicateEvent(int id){
+        Event event = this.getEvent(id);
+        return this.createEvent(event.getName(), event.getStartDateTime(), event.getEndDateTime());
+    }
+
 
     //1)Basics for events
 
