@@ -56,6 +56,13 @@ public class CalendarDataSaver {
         return obj;
 
     }
+
+    /**
+     *
+     * Convert an ArrayList of Events into a JSONArray
+     * @param events
+     * @return corresponding JSONArray
+     */
     public JSONArray saveEvents(ArrayList<Event> events){
         JSONArray array = new JSONArray();
         for(Event event:events){
@@ -83,6 +90,13 @@ public class CalendarDataSaver {
         }
         return array;
     }
+
+    /**
+     *
+     * Convert an ArrayList of Memos into a JSONArray
+     * @param memos
+     * @return corresponding JSONArray
+     */
     private JSONArray saveMemos(ArrayList<Memo> memos){
         JSONArray array = new JSONArray();
         for(Memo memo:memos){
@@ -92,6 +106,13 @@ public class CalendarDataSaver {
         }
         return array;
     }
+
+    /**
+     *
+     * Convert an ArrayList of AlertSeries into a JSONArray
+     * @param AlertSe
+     * @return corresponding JSONArray
+     */
     private JSONArray saveAlertSeries(ArrayList<AlertSeries> AlertSe){
         JSONArray array = new JSONArray();
         for(AlertSeries alerts: AlertSe){
@@ -104,6 +125,13 @@ public class CalendarDataSaver {
         }
         return array;
     }
+
+    /**
+     *
+     * Convert an ArrayList of Alerts into a JSONArray
+     * @param alerts
+     * @return corresponding JSONArray
+     */
     private JSONArray saveAlerts(ArrayList<Alert> alerts){
         JSONArray array = new JSONArray();
         for(Alert alert:alerts){
@@ -114,6 +142,13 @@ public class CalendarDataSaver {
         }
         return array;
     }
+
+    /**
+     *
+     * Convert an ArrayList of Series into a JSONArray
+     * @param series
+     * @return corresponding JSONArray
+     */
     private JSONArray saveSeries(ArrayList<Series> series){
         JSONArray array = new JSONArray();
         for(Series s: series){
