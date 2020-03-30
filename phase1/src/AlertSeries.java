@@ -27,7 +27,7 @@ public class AlertSeries {
     }
 
     public static void bringDownNum() {
-        this.numAlertSeries --;
+        numAlertSeries --;
     }
 
     /**

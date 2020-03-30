@@ -26,7 +26,7 @@ public class Alert {
     }
 
     public static void bringDownNum() {
-        this.numAlerts --;
+        numAlerts --;
     }
 
     public LocalDate getLocalDate() {

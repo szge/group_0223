@@ -28,7 +28,7 @@ public class Memo {
     }
 
     public static void bringDownNum() {
-        this.numMemos --;
+        numMemos --;
     }
 
     /**
