@@ -26,7 +26,7 @@ public class Series {
     }
 
     public static void bringDownNum() {
-        this.numSeries --;
+        numSeries --;
     }
 
     /**

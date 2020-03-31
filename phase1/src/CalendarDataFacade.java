@@ -170,7 +170,8 @@ public class CalendarDataFacade {
         ArrayList<Event> toBeLoaded = new ArrayList<Event>();
         JSONObject user = (JSONObject) jfile.get(username);
         JSONArray events = (JSONArray) user.get("Events");
-        loader.loadEvents(events, toBeLoaded);
+        loader.loadEvents(events, toBeLoaded, new ArrayList<Memo>(),
+                new ArrayList<Alert>());
         Event newEvent = new Event(event.getName(), event.getStartDateTime(), event.getEndDateTime());
         for(String t: event.getTags()) {
             newEvent.addTag(t);

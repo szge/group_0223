@@ -60,7 +60,7 @@ public class Event {
     }
 
     public static void bringDownNum() {
-        this.numEvents --;
+        numEvents --;
     }
 
     public ArrayList<String> getTags() {
