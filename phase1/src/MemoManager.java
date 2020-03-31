@@ -6,7 +6,7 @@ public class MemoManager {
 
     private ArrayList<Memo> store; //holds a list of the Memos
 
-    public MemoManager(ArrayList<> store){
+    public MemoManager(ArrayList<Memo> store){
         this.store = store;
     }
 
@@ -25,9 +25,8 @@ public class MemoManager {
         //remove the id of an event from a memo
         this.getContent(content).removeEvent(id); //Need a Memo method to remove the id of a Memo
         if (this.getContent(content).getEvents().size() == 0){
-            this.store.remove(content);
+            this.store.remove(this.getContent(content));
         }
-        //Do we want to remove a memo that isn't associated with any events anymore?
     }
 
     public boolean contains(String content){
@@ -53,7 +52,7 @@ public class MemoManager {
     } //remove a event id from a memo
 
     public void deleteMemo(Memo memo){
-        this.store.remove(memo.toString());
+        this.store.remove(memo);
     } //deletes a memo completely
 
     public void editName(Memo memo, String content){

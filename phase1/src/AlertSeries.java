@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class AlertSeries {
     private String name;
-    private ArrayList<Integer> alerts = new ArrayList<>();
+    private ArrayList<Integer> alerts;
 
     private int id;
     private static int numAlertSeries = 0;
@@ -12,6 +12,7 @@ public class AlertSeries {
         numAlertSeries ++;
         id = numAlertSeries;
         this.name = name;
+        this.alerts = new ArrayList<>();
     }
 
     public int getId() {

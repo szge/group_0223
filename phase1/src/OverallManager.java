@@ -10,16 +10,16 @@ public class OverallManager{
     private SeriesManager seriesManager;
     private EventManager eventManager;
 
-    public OverallManager(ArrayList data) {
+    public OverallManager(ArrayList<ArrayList> data) {
         this.eventManager = new EventManager(data.get(1));
-        this.seriesManager = new SeriesManager(data.get(4));
+        this.seriesManager = new SeriesManager(this.eventManager, data.get(4));
         this.memoManager = new MemoManager(data.get(2));
-        this.alertManager = new AlertManager(data.get(3), data.get(5));
+        this.alertManager = new AlertManager(data.get(5), data.get(3));
     }
 
     //Event methods
     public void postponeIndef(int id){
-        this.eventManager.postponeIndef(int id);
+        this.eventManager.postponeIndef(id);
     }
 
     public Event duplicateEvent(int id){
