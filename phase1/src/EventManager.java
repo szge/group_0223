@@ -8,10 +8,21 @@ public class EventManager {
 
     public EventManager(ArrayList<Event> store) { this.store = store; }
 
+
+    //Phase 2 methods
+    /**
+     * postpone the event by setting it's start and end as null, while maintaining its duration
+     * @param id
+     */
     public void postponeIndef(int id){
         this.getEvent(id).postpone();
     }
 
+    /**
+     * Creates another event with the same name, start and ending as the event of the given id
+     * @param id
+     * @return the event created
+     */
     public Event duplicateEvent(int id){
         Event event = this.getEvent(id);
         return this.createEvent(event.getName(), event.getStartDateTime(), event.getEndDateTime());
@@ -19,7 +30,13 @@ public class EventManager {
 
 
     //1)Basics for events
-
+    /**
+     * Creates a new event and adds it to the store of events already available
+     * @param name
+     * @param start
+     * @param end
+     * @return the new event
+     */
     public Event createEvent(String name, LocalDateTime start, LocalDateTime end) {
         //creates an event
         Event event = new Event(name, start, end);
@@ -27,36 +44,68 @@ public class EventManager {
         return event;
     }
 
+    /**
+     * removes an event from the list of events
+     * @param event
+     */
     public void deleteEvent(Event event) {
         this.store.remove(event);
-    } //deletes an event
+    }
 
+    /**
+     * changes the start time of an event
+     * @param event
+     * @param newStart
+     */
     public void editEventStart(Event event, LocalDateTime newStart) {
-        //edits the starting time of an event
         event.editStart(newStart);
     }
 
+    /**
+     * changes the ending of an event
+     * @param event
+     * @param newEnd
+     */
     public void editEventEnd(Event event, LocalDateTime newEnd) {
-        //edits the end time of an event
         event.editEnd(newEnd);
     }
 
+    /**
+     * changes the name of an event
+     * @param event
+     * @param newName
+     */
     public void editName(Event event, String newName) {
-        //edit the name of an event
         event.editName(newName);
     }
 
 
     //2)Tag methods
 
+    /**
+     * Adds a tag to an event
+     * @param event
+     * @param content
+     */
     public void addTag(Event event, String content) {
         event.addTag(content);
-    } //add a tag
+    }
 
+    /**
+     * Removes a tag from an event
+     * @param event
+     * @param content
+     */
     public void removeTag(Event event, String content) {
         event.removeTag(content);
     } //remove a tag
 
+    /**
+     * edits a tag by changing it to another
+     * @param event
+     * @param oldTag
+     * @param newTag
+     */
     public void editTag(Event event, String oldTag, String newTag) {
         //edit a tag by removing the old tag and adding a new tag
         event.removeTag(oldTag);

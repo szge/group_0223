@@ -2,7 +2,10 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 
+
 public class MemoManager {
+
+
 
     private ArrayList<Memo> store; //holds a list of the Memos
 
@@ -11,7 +14,6 @@ public class MemoManager {
     }
 
     public Memo addMemo(int id, String content){
-        //create a memo for event with id
         Memo newMemo = this.getContent(content);
         if (!this.contains(content)){
             newMemo = new Memo(content);
@@ -22,14 +24,14 @@ public class MemoManager {
     }
 
     public void removeMemo(String content, int id){
-        //remove the id of an event from a memo
+
         this.getContent(content).removeEvent(id); //Need a Memo method to remove the id of a Memo
         if (this.getContent(content).getEvents().size() == 0){
             this.store.remove(this.getContent(content));
         }
     }
 
-    public boolean contains(String content){
+    private boolean contains(String content){
         for (int i = 0; i < this.store.size(); i++) {
             if (this.store.get(i).toString().equals(content)){
                 return true;
@@ -38,7 +40,8 @@ public class MemoManager {
         return false;
     }
 
-    public Memo getContent(String content){
+
+    private Memo getContent(String content){
         for (int i = 0; i < this.store.size(); i++) {
             if (this.store.get(i).toString().equals(content)){
                 return this.store.get(i);
@@ -51,8 +54,8 @@ public class MemoManager {
         memo.removeEvent(id);
     } //remove a event id from a memo
 
-    public void deleteMemo(Memo memo){
-        this.store.remove(memo);
+    public void deleteMemo(String content){
+        this.store.remove(this.getContent(content));
     } //deletes a memo completely
 
     public void editName(Memo memo, String content){

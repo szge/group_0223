@@ -78,7 +78,8 @@ public class OverallManager{
 
     public void editTag(Event event, String oldTag, String newTag) {
         //change a certain tag for an event
-        this.eventManager.editTag(event, oldTag, newTag);
+        this.eventManager.removeTag(event, oldTag);
+        this.eventManager.addTag(event, newTag);
     }
 
     //Alerts
