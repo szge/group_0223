@@ -152,6 +152,16 @@ public class OverallManager{
         for (int i = 0; i < series.getEvents().size(); i++) {
             this.addMemo(this.eventManager.getEvent(series.getEvents().get(i)), content);
         }
+        /**
+         Series series = new Series(name);
+         while (startEnd.isBefore(absoluteEnd)) {
+         series.addEvent(this.eventManager.createEvent(name, startStart, startEnd));
+         startStart.plus(repetition);
+         startEnd.plus(repetition);
+         }
+         this.store.add(series);
+         return series;
+         */
     }
 
     public void deleteSerialEvent(Event event){
