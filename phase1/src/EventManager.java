@@ -30,6 +30,18 @@ public class EventManager {
         return events;
     }
 
+    public int getId(Event event){
+        return event.getId();
+    }
+
+    public Event getEvent(int id){
+        for (int i = 0; i < this.store.size(); i++) {
+            if (this.store.get(i).getId() == id){
+                return this.store.get(i);
+            }
+        }
+    }
+
 
 
     //1)Basics for events

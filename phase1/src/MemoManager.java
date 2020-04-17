@@ -30,6 +30,10 @@ public class MemoManager {
         }
     }
 
+    public void deleteMemo(Memo memo){
+        this.store.remove(memo);
+    }
+
     private boolean contains(String content){
         for (int i = 0; i < this.store.size(); i++) {
             if (this.store.get(i).toString().equals(content)){

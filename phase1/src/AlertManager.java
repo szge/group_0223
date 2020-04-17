@@ -17,17 +17,25 @@ public class AlertManager {
         this.store.add(newAlert);
     }
 
-    public void addSerialAlert(String name, LocalDateTime start, LocalDateTime finish, Duration repetition){
+    public ArrayList<Alert> addSerialAlert(String name, LocalDateTime start, LocalDateTime finish, Duration repetition){
         ArrayList<Alert> alerts = new ArrayList<>();
         while(start.isBefore(finish)){
-            this.addAlert(name, start);
+            alerts.add(this.addReturnAlert(name, start));
             start = start.plus(repetition);
         }
+        return alerts;
     }
 
     public void editName(Alert alert, String content){
         //edits the name of an alert
         alert.changeName(content);
+    }
+
+    public Alert addReturnAlert(String name, LocalDateTime when){
+        //create and alert
+        Alert newAlert = new Alert(name, when);
+        this.store.add(newAlert);
+        return newAlert;
     }
 
     public void removeAlert(Alert alert){
