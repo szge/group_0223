@@ -13,8 +13,8 @@ public class OverallManager{
     public OverallManager(ArrayList<ArrayList> data) {
         this.eventManager = new EventManager(data.get(1));
         this.seriesManager = new SeriesManager(data.get(4));
-        this.memoManager = new MemoManager(data.get(2), data.get(4));
-        this.alertManager = new AlertManager(data.get(5), data.get(3));
+        this.memoManager = new MemoManager(data.get(1));
+        this.alertManager = new AlertManager(data.get(2));
     }
 
     //Event methods
@@ -172,7 +172,7 @@ public class OverallManager{
     public ArrayList<Event> getEventsByTag(String tag){
          return this.eventManager.getEventsByTag(tag);
     }
-
+    public Event getEvent(int id){return this.eventManager.getEvent(id);}
     public ArrayList<Event> getEventsByMemo(Memo memo){
         return this.eventManager.getEventsByMemo(memo);
     }
