@@ -89,8 +89,7 @@ public class CalendarManager {
      * FALSE if a user with that username exists already
      */
     public boolean createNewUser(String user, String pass) {
-        /* TODO: create a method createNewUser() in DataManager to correctly set up a new user for access */
-        // DataManager.createNewUser(user)
+        dataMg.addNewUser(user + 1);
         return userMg.createNewUser(user, pass);
     }
 
@@ -174,18 +173,6 @@ public class CalendarManager {
     }
 
 
-    /**
-     * @return void
-     * @author Alex
-     */
-    public void postponeIndef(int id) {
-        overMg.postponeIndef(id);
-    }
-
-    public Event duplicateEvent(int id) {
-        return overMg.duplicateEvent(id);
-    }
-
     public void editEventName(Event event, String content) {
         overMg.editEventName(event, content);
     }
@@ -226,9 +213,9 @@ public class CalendarManager {
         overMg.editAlertTime(alert, when);
     }
 
-    public ArrayList<Alert> getRemainingAlerts(int id) {
-        return overMg.getRemainingAlerts(id);
-    }
+//    public ArrayList<Alert> getRemainingAlerts(int id) {
+//        return overMg.getRemainingAlerts(id);
+//    }
 
     public void addMemo(Event event, String content) {
         overMg.addMemo(event, content);
@@ -250,31 +237,24 @@ public class CalendarManager {
         overMg.editMemo(memo, content);
     }
 
-    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
-                               Duration repetition, LocalDateTime absoluteEnd, String name) {
-        overMg.addSerialEvent(startStart, startEnd, repetition, absoluteEnd, name);
-    }
+//    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
+//                               Duration repetition, LocalDateTime absoluteEnd, String name) {
+//        overMg.addSerialEvent(startStart, startEnd, repetition, absoluteEnd, name);
+//    }
+//
+//    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
+//                               Duration repetition, LocalDateTime absoluteEnd, String name, String content) {
+//        overMg.addSerialEvent(startStart, startEnd, repetition, absoluteEnd, name, content);
+//    }
+//
+//    public void deleteSerialEvent(Event event) {
+//        overMg.deleteSerialEvent(event);
+//    }
 
-    public void addSerialEvent(LocalDateTime startStart, LocalDateTime startEnd,
-                               Duration repetition, LocalDateTime absoluteEnd, String name, String content) {
-        overMg.addSerialEvent(startStart, startEnd, repetition, absoluteEnd, name, content);
-    }
-
-    public void deleteSerialEvent(Event event) {
-        overMg.deleteSerialEvent(event);
-    }
-
-    public void editNameSerialEvent(Event event, String name) {
-        overMg.editNameSerialEvent(event, name);
-    }
 
     public void addSerialAlerts(Event event, String name, LocalDateTime start,
                                 LocalDateTime finish, Duration repetition) {
         overMg.addSerialAlerts(event, name, start, finish, repetition);
-    }
-
-    public void deleteSerialAlerts(Event event, Alert alert) {
-        overMg.deleteSerialAlerts(event, alert);
     }
 }
 

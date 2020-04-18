@@ -34,11 +34,12 @@
      }
 
      public Series seriesGetter(String name){
-         for (int i = 0; i < this.store.size(); i++) {
-             if (this.store.get(i).getName().equals(name)){
-                 return this.store.get(i);
+         for (Series series : this.store) {
+             if (series.getName().equals(name)) {
+                 return series;
              }
          }
+         return null;
      }
 
     public void deleteSerialEvent(Series series){

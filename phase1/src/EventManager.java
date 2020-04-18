@@ -35,11 +35,12 @@ public class EventManager {
     }
 
     public Event getEvent(int id){
-        for (int i = 0; i < this.store.size(); i++) {
-            if (this.store.get(i).getId() == id){
-                return this.store.get(i);
+        for (Event event : this.store) {
+            if (event.getId() == id) {
+                return event;
             }
         }
+        return null;
     }
 
 

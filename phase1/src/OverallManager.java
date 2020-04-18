@@ -11,8 +11,8 @@ public class OverallManager{
     private SeriesManager seriesManager;
 
     public OverallManager(ArrayList<ArrayList> data) {
-        this.eventManager = new EventManager(data.get(1));
-        this.seriesManager = new SeriesManager(data.get(4));
+        this.eventManager = new EventManager(data.get(0));
+        this.seriesManager = new SeriesManager(data.get(3));
         this.memoManager = new MemoManager(data.get(1));
         this.alertManager = new AlertManager(data.get(2));
     }
