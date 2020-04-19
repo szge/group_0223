@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="javax:javaee-api:8.0" type="repository">
+    <properties maven-id="javax:javaee-api:8.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/javax/javaee-api/8.0/javaee-api-8.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/mail/javax.mail/1.6.0/javax.mail-1.6.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
