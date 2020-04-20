@@ -223,7 +223,6 @@ public class UserInterface {
         }
     }
 
-
     private static void viewAlerts() {
         ArrayList<Alert> alerts = calendarManager.getAlerts();
         for(Alert a : alerts){
